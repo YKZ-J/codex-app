@@ -3,33 +3,48 @@ import { describe, expect, it } from 'vitest';
 import App from './App';
 
 describe('黒岩農場のトップページ', () => {
-  it('メインビジュアル、6つの事業、お知らせを表示する', () => {
+  it('主要事業、準備中の取り組み、商品と採用導線を表示する', () => {
     render(<App />);
     const main = within(screen.getByRole('main'));
     expect(
       main.getByRole('heading', {
         level: 1,
-        name: '新しい時代に、新しい農業を。',
+        name: '北海道の大地から、そばの未来を拓く。',
       }),
     ).toBeVisible();
     expect(main.getByRole('img', { name: '黒岩農場の畑' })).toHaveAttribute(
       'src',
       expect.stringContaining('top-000.png'),
     );
-    expect(main.getAllByRole('article')).toHaveLength(6);
+    expect(main.getAllByRole('article')).toHaveLength(5);
     for (const title of [
-      '農業',
+      'そばの栽培',
+      'そばの加工・製粉・製麺',
+      '商品開発・販売',
       'ドローン農薬防除',
-      '加工',
-      '商品',
-      'お弁当',
-      '飲食店',
-      'NEWS',
+      'お弁当事業',
+      '飲食店事業',
     ]) {
       expect(
-        main.getByRole('heading', { level: 2, name: title }),
+        main.getByRole('heading', { level: 3, name: title }),
       ).toBeVisible();
     }
+    expect(
+      main.getByRole('heading', { level: 2, name: 'お知らせ' }),
+    ).toBeVisible();
+    expect(main.getAllByText('準備中')).toHaveLength(2);
+    expect(main.getByText(/オンラインショップは準備中です/)).toBeVisible();
+    expect(main.getByRole('link', { name: /採用情報を見る/ })).toHaveAttribute(
+      'href',
+      '/recruit/',
+    );
+    expect(
+      main.getByRole('link', { name: /商品について問い合わせる/ }),
+    ).toHaveAttribute('href', '/contact/');
+    expect(main.getByRole('link', { name: /事業を知る/ })).toHaveAttribute(
+      'href',
+      '#business',
+    );
     expect(main.getByText('公式ホームページを公開しました')).toBeVisible();
   });
 
@@ -49,14 +64,17 @@ describe('黒岩農場のトップページ', () => {
     expect(button).toHaveFocus();
   });
 
-  it('メニューのページ内リンクを選択すると閉じる', () => {
+  it('メニューの事業紹介リンクを選択すると閉じる', () => {
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: 'メニューを開く' }));
     const menu = within(
       screen.getByRole('navigation', { name: '展開メニュー' }),
     );
     const link = menu.getByRole('link', { name: /事業紹介/ });
-    expect(link).toHaveAttribute('href', '#business');
+    expect(link).toHaveAttribute('href', '/business/');
+    link.addEventListener('click', (event) => event.preventDefault(), {
+      once: true,
+    });
     fireEvent.click(link);
     expect(
       screen.queryByRole('navigation', { name: '展開メニュー' }),

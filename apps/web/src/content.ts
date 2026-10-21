@@ -4,13 +4,13 @@ export const assetUrl = (filename: string) =>
   `${origin}/wp-content/uploads/2026/08/${filename}`;
 
 export const navigation = [
-  { label: 'ホーム', href: '#home' },
-  { label: '会社情報', href: `${origin}/company/` },
-  { label: '事業紹介', href: '#business' },
-  { label: '採用情報', href: `${origin}/recruit/` },
-  { label: 'オンラインショップ', href: `${origin}/online-shop/` },
-  { label: 'お知らせ', href: '#news' },
-  { label: 'お問い合わせ', href: `${origin}/contact/` },
+  { label: 'ホーム', href: '/' },
+  { label: '会社情報', href: '/company/' },
+  { label: '事業紹介', href: '/business/' },
+  { label: '採用情報', href: '/recruit/' },
+  { label: 'オンラインショップ', href: '/online-shop/' },
+  { label: 'お知らせ', href: '/news/' },
+  { label: 'お問い合わせ', href: '/contact/' },
 ];
 
 export const businesses = [
@@ -37,7 +37,7 @@ export const businesses = [
     english: 'PROCESSING',
     title: '加工',
     image: 'b03.png',
-    alt: 'そばの製粉・製麺工程',
+    alt: '加工前のそばの実',
     description:
       '畑で育てたそばを、札幌の製麺所へ。石臼による製粉から製麺まで、自分たちの手で取り組みます。伝統の技と新しい設備を生かし、そば本来の香りと風味を大切に仕上げます。',
   },
@@ -46,7 +46,7 @@ export const businesses = [
     english: 'PRODUCTS',
     title: '商品',
     image: 'b0004.png',
-    alt: '冷凍そばの商品イメージ',
+    alt: 'そばの盛り付けと商品パッケージ',
     description:
       '北海道の畑から、ご家庭の食卓へ。丹精込めて育てたそばを、生そばや冷凍麺としてお届けしています。暮らしに合わせた楽しみ方で、素材の豊かな味わいをお楽しみください。',
   },
@@ -68,31 +68,31 @@ export const businesses = [
     description:
       '北海道の恵みを、五感で味わう場所へ。自社産のそばをはじめ、食材の魅力を生かした料理と、心地よい時間をお届けする飲食店の開業を準備しています。',
   },
-];
+] as const;
 
 export const news = [
   {
     date: '2026.08.16',
     dateTime: '2026-08-16',
-    href: `${origin}/urgent-recruit/`,
+    href: '/urgent-recruit/',
     title: '【急募】製麺スタッフ・お弁当調理スタッフを募集します',
   },
   {
     date: '2026.08.14',
     dateTime: '2026-08-14',
-    href: `${origin}/agrifood-expo-tokyo-2026/`,
+    href: '/agrifood-expo-tokyo-2026/',
     title: '「アグリフードEXPO東京2026」出展のお知らせ',
   },
   {
     date: '2026.07.20',
     dateTime: '2026-07-20',
-    href: `${origin}/instagram-open/`,
+    href: '/instagram-open/',
     title: 'Instagramアカウントを開設しました',
   },
   {
     date: '2026.07.18',
     dateTime: '2026-07-18',
-    href: `${origin}/official-homepage-launched/`,
+    href: '/official-homepage-launched/',
     title: '公式ホームページを公開しました',
   },
 ];
