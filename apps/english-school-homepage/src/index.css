@@ -188,11 +188,11 @@
     @apply mx-auto grid w-[calc(100%-96px)] max-w-[1160px] grid-cols-[.8fr_1.4fr] gap-x-20 gap-y-10 border-t border-[#dfebd9] py-24;
   }
   .about-section > h2 {
-    @apply m-0 text-[35px] leading-[1.7] font-bold tracking-[.04em] text-ohana-deep;
+    @apply m-0 flex items-start gap-3 text-[35px] leading-[1.7] font-bold tracking-[.04em] text-ohana-deep;
   }
   .about-section > h2::before {
     content: '';
-    @apply mb-7 block size-3 rounded-full bg-ohana-green;
+    @apply mt-[.65em] block size-3 shrink-0 rounded-full bg-ohana-green;
   }
   .blue-panel {
     @apply text-[16px] leading-[2.3] tracking-[.025em];
@@ -213,11 +213,11 @@
     @apply relative mx-auto grid w-[calc(100%-96px)] max-w-[1160px] grid-cols-[.8fr_1.4fr] gap-x-20 gap-y-8 rounded-[32px] bg-ohana-pale px-14 py-16;
   }
   .lessons-section h2 {
-    @apply m-0 text-[32px] leading-[1.7] font-bold tracking-[.04em] text-ohana-deep;
+    @apply m-0 flex items-start gap-3 text-[32px] leading-[1.7] font-bold tracking-[.04em] text-ohana-deep;
   }
   .lessons-section h2::before {
     content: '';
-    @apply mb-7 block size-3 rounded-full bg-ohana-green;
+    @apply mt-[.65em] block size-3 shrink-0 rounded-full bg-ohana-green;
   }
   .lessons-section > p {
     @apply m-0 text-[16px] leading-[2.3] tracking-[.025em];
@@ -263,11 +263,11 @@
     @apply overflow-hidden rounded-[26px] border border-[#dfebd9] bg-white px-10 pt-10 pb-6;
   }
   .event-heading {
-    @apply mt-0 mb-7 border-b border-[#dfebd9] pb-7 text-[23px] leading-[1.8] font-bold tracking-[.025em] text-ohana-deep;
+    @apply mt-0 mb-7 flex items-start gap-3 border-b border-[#dfebd9] pb-7 text-[23px] leading-[1.8] font-bold tracking-[.025em] text-ohana-deep;
   }
   .event-heading::before {
     content: '';
-    @apply mb-5 block h-[5px] w-10 rounded-full bg-ohana-green;
+    @apply mt-[.8em] block h-[5px] w-10 shrink-0 rounded-full bg-ohana-green;
   }
   .event-heading a {
     @apply transition-colors hover:text-ohana-green;
@@ -490,7 +490,6 @@
     }
     .about-section > h2::before,
     .lessons-section h2::before {
-      margin-bottom: 20px;
       width: 9px;
       height: 9px;
     }
@@ -658,11 +657,11 @@
     scroll-margin-top: 25px;
   }
   .lesson-page-section > h3 {
-    @apply mt-0 mb-7 text-[30px] leading-[1.7] font-bold text-ohana-deep;
+    @apply mt-0 mb-7 flex items-start gap-3 text-[30px] leading-[1.7] font-bold text-ohana-deep;
   }
   .lesson-page-section > h3::before {
     content: '';
-    @apply mb-5 block size-[10px] rounded-full bg-ohana-green;
+    @apply mt-[.65em] block size-[10px] shrink-0 rounded-full bg-ohana-green;
   }
   .lesson-page-section > p {
     @apply mb-6 max-w-[940px] text-[15px] leading-[2.1];
