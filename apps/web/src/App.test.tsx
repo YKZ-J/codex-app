@@ -80,4 +80,23 @@ describe('黒岩農場のトップページ', () => {
       screen.queryByRole('navigation', { name: '展開メニュー' }),
     ).not.toBeInTheDocument();
   });
+  it('閉じたメニューを操作対象から外し、メニュー外の操作で閉じる', () => {
+    render(<App />);
+    const button = screen.getByRole('button', { name: 'メニューを開く' });
+    const panel = document.getElementById('expanded-navigation');
+    expect(panel).toHaveAttribute('inert');
+    fireEvent.click(button);
+    expect(panel).not.toHaveAttribute('inert');
+    fireEvent.pointerDown(screen.getByRole('main'));
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+    expect(panel).toHaveAttribute('inert');
+  });
+
+  it('フォーカスがヘッダーから離れるとメニューを閉じる', () => {
+    render(<App />);
+    const button = screen.getByRole('button', { name: 'メニューを開く' });
+    fireEvent.click(button);
+    fireEvent.blur(button, { relatedTarget: screen.getByRole('main') });
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+  });
 });

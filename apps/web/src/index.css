@@ -13,7 +13,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 24px;
+    scroll-padding-top: 112px;
   }
   body {
     @apply m-0 min-w-80 bg-white text-base leading-[1.8] text-farm-ink antialiased;
@@ -70,10 +70,16 @@
     @apply fixed top-3 left-3 z-100 -translate-y-24 bg-white px-5 py-3 focus:translate-y-0;
   }
   .site-header {
-    @apply relative z-50 flex h-24 items-center justify-between gap-6 bg-white px-[4%] text-farm-green;
+    @apply sticky top-0 z-50 flex h-24 items-center justify-between gap-6 border-b border-farm-green/10 bg-white/95 px-[4%] backdrop-blur-xl text-farm-green;
   }
   .wordmark {
     @apply inline-flex shrink-0 flex-col items-center;
+  }
+  .wordmark img {
+    @apply h-auto w-[220px];
+  }
+  .site-footer .wordmark {
+    @apply rounded-sm bg-white p-3;
   }
   .wordmark-jp {
     @apply font-serif text-[30px] font-bold leading-tight tracking-[.17em];
@@ -133,6 +139,96 @@
   .hero-image {
     @apply absolute inset-0 -z-20 h-full w-full object-cover;
     object-position: 58% center;
+  }
+  .hero-video {
+    animation: media-enter 1.2s ease-out both;
+  }
+  .hero-image.is-drifting {
+    animation: hero-drift 7s ease-out both;
+  }
+  .hero-playback {
+    @apply absolute right-[10%] bottom-6 z-10 flex min-h-11 items-center gap-3 rounded-full border border-white/40 bg-black/30 px-4 text-xs text-white backdrop-blur-md transition-colors hover:bg-black/60;
+  }
+  .hero-copy > * {
+    animation: copy-enter 1s ease-out both;
+  }
+  .hero-copy > :nth-child(2) {
+    animation-delay: 150ms;
+  }
+  .hero-copy > :nth-child(3) {
+    animation-delay: 300ms;
+  }
+  .hero-copy > :nth-child(4) {
+    animation-delay: 450ms;
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 800ms ease,
+      transform 800ms ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  .business-image-wrap img,
+  .service-grid > img {
+    transition: transform 700ms ease;
+  }
+  .business-image-wrap:hover img {
+    transform: scale(1.04);
+  }
+  .expanded-nav {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-12px);
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease,
+      visibility 220ms;
+  }
+  .expanded-nav.is-open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .expanded-nav a {
+    opacity: 0;
+    transform: translateX(14px);
+    transition:
+      opacity 240ms ease,
+      transform 240ms ease,
+      background-color 200ms ease;
+  }
+  .expanded-nav.is-open a {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .expanded-nav a:is(:hover, :focus-visible) {
+    @apply bg-farm-green/5;
+    transform: translateX(4px);
+  }
+  .desktop-nav a:not(:last-child) {
+    @apply relative;
+  }
+  .desktop-nav a:not(:last-child)::after {
+    content: '';
+    @apply absolute right-0 bottom-0 left-0 h-px bg-farm-green;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 220ms ease;
+  }
+  .desktop-nav a:is(:hover, :focus-visible, [aria-current='page'])::after {
+    transform: scaleX(1);
+  }
+  .menu-toggle {
+    transition: color 200ms ease;
+  }
+  .menu-toggle:hover {
+    @apply text-farm-gold;
   }
   .hero-shade {
     @apply absolute inset-0 -z-10;
@@ -367,10 +463,18 @@
       height: 80px;
       padding-inline: 6%;
     }
+    .wordmark img {
+      width: 185px;
+    }
+    .hero-playback {
+      bottom: 62px;
+    }
     .wordmark-jp {
       font-size: 26px;
     }
     .expanded-nav {
+      width: 100%;
+      max-width: none;
       max-height: calc(100dvh - 80px);
       padding-inline: 6%;
     }
@@ -507,7 +611,37 @@
     }
   }
 }
+@keyframes hero-drift {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+@keyframes media-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes copy-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 @media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
   html {
     scroll-behavior: auto;
   }

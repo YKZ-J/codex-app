@@ -373,6 +373,50 @@
   .desktop-nav a[aria-current='page'] {
     @apply underline underline-offset-8;
   }
+  .subpage-heading .page-width > * {
+    animation: copy-enter 800ms ease-out both;
+  }
+  .subpage-heading h1 {
+    animation-delay: 120ms;
+  }
+  .subpage-heading-images img {
+    animation: subpage-image-enter 1.2s ease-out both;
+  }
+  .source-content
+    :is(section, article, .source-rc-stage-content, .source-kf-detail-copy),
+  .breadcrumbs > * {
+    min-width: 0;
+  }
+  .section-navigation a {
+    @apply rounded-sm px-3 transition-colors hover:bg-farm-green/10 focus-visible:bg-farm-green/10;
+  }
+  .source-rc-field-photo {
+    @apply overflow-hidden rounded-sm;
+  }
+  .source-rc-field-photo img {
+    transition: transform 600ms ease;
+  }
+  .source-rc-field-card:is(:hover, :focus-visible) img {
+    transform: scale(1.05);
+  }
+  .source-content
+    :is(.source-rc-cta-btn, .source-ig-cta, input[type='submit']) {
+    transition:
+      background-color 200ms ease,
+      transform 200ms ease;
+  }
+  .source-content :is(.source-rc-cta-btn, .source-ig-cta):hover {
+    @apply bg-[#355540];
+    transform: translateY(-2px);
+  }
+  .source-content :is(input, textarea, select) {
+    transition:
+      border-color 200ms ease,
+      box-shadow 200ms ease;
+  }
+  .source-content :is(input, textarea, select):focus-visible {
+    @apply border-farm-green shadow-sm;
+  }
   @media (width < 1024px) {
     .source-rc-field-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -391,6 +435,9 @@
     .subpage-heading {
       min-height: 240px;
       padding-block: 48px;
+    }
+    .subpage-heading-images img:not(:first-child) {
+      display: none;
     }
     .source-content {
       padding-top: 24px;
@@ -470,9 +517,38 @@
     .source-content :is(td, th):first-child {
       width: 28%;
     }
+    .source-kf-greeting-sign {
+      flex-wrap: wrap;
+      gap: 8px 16px;
+    }
+    .source-content :is(.source-rc-cta-btn, .source-ig-cta) {
+      width: 100%;
+      justify-content: center;
+    }
+    .source-content table {
+      table-layout: fixed;
+    }
     .section-navigation {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       margin-bottom: 24px;
       gap: 8px 20px;
     }
+  }
+}
+
+@keyframes subpage-image-enter {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@media (width < 400px) {
+  .source-rc-field-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

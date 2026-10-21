@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { navigation } from './content';
 
 export function Arrow({ diagonal = false }: { diagonal?: boolean }) {
@@ -8,18 +8,54 @@ export function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 function Wordmark() {
   return (
     <a className="wordmark" href="/" aria-label="黒岩農場 ホーム">
-      <span className="wordmark-jp">黒岩農場</span>
-      <span className="wordmark-en">KUROIWA FARM</span>
+      <img
+        src="/images/kuroiwa-logo.png"
+        alt="株式会社黒岩農場"
+        width="1734"
+        height="372"
+      />
     </a>
   );
 }
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const header = useRef<HTMLElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const closeOutside = (event: PointerEvent) => {
+      if (
+        event.target instanceof Node &&
+        !header.current?.contains(event.target)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+    const initialWidth = window.innerWidth;
+    const closeOnResize = () => {
+      if (window.innerWidth === initialWidth) return;
+      if (header.current?.contains(document.activeElement)) {
+        menuButton.current?.focus();
+      }
+      setIsMenuOpen(false);
+    };
+    document.addEventListener('pointerdown', closeOutside);
+    window.addEventListener('resize', closeOnResize);
+    return () => {
+      document.removeEventListener('pointerdown', closeOutside);
+      window.removeEventListener('resize', closeOnResize);
+    };
+  }, [isMenuOpen]);
 
   return (
     <header
+      ref={header}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget))
+          setIsMenuOpen(false);
+      }}
       className="site-header"
       onKeyDown={(event) => {
         if (event.key === 'Escape' && isMenuOpen) {
@@ -63,32 +99,33 @@ export function Header() {
           <i />
         </span>
       </button>
-      {isMenuOpen && (
-        <nav
-          id="expanded-navigation"
-          className="expanded-nav"
-          aria-label="展開メニュー"
-        >
-          <p className="eyebrow">KUROIWA FARM</p>
-          {navigation.map((item, index) => (
-            <a
-              key={item.label}
-              href={item.href}
-              aria-current={
-                item.href === window.location.pathname ? 'page' : undefined
-              }
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <span className="menu-number">0{index + 1}</span>
-              {item.label}
-              {item.label === 'オンラインショップ' && (
-                <small className="nav-status">準備中</small>
-              )}
-              <Arrow />
-            </a>
-          ))}
-        </nav>
-      )}
+      <nav
+        id="expanded-navigation"
+        className={`expanded-nav ${isMenuOpen ? 'is-open' : ''}`}
+        aria-hidden={!isMenuOpen}
+        inert={!isMenuOpen}
+        aria-label="展開メニュー"
+      >
+        <p className="eyebrow">KUROIWA FARM</p>
+        {navigation.map((item, index) => (
+          <a
+            key={item.label}
+            style={{ transitionDelay: isMenuOpen ? `${index * 35}ms` : '0ms' }}
+            href={item.href}
+            aria-current={
+              item.href === window.location.pathname ? 'page' : undefined
+            }
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <span className="menu-number">0{index + 1}</span>
+            {item.label}
+            {item.label === 'オンラインショップ' && (
+              <small className="nav-status">準備中</small>
+            )}
+            <Arrow />
+          </a>
+        ))}
+      </nav>
     </header>
   );
 }

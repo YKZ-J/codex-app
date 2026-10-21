@@ -1,3 +1,4 @@
+import { HeroMedia } from './HeroMedia';
 import { assetUrl, businesses, news } from './content';
 import { Arrow } from './Layout';
 
@@ -6,12 +7,7 @@ export default function HomePage() {
     <>
       <main id="main">
         <section id="home" className="hero" aria-labelledby="hero-title">
-          <img
-            className="hero-image"
-            src={assetUrl('top-000.png')}
-            alt="黒岩農場の畑"
-            fetchPriority="high"
-          />
+          <HeroMedia />
           <div className="hero-shade" />
           <div className="hero-copy">
             <p className="hero-kicker">開拓の精神</p>

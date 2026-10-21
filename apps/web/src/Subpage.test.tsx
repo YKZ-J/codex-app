@@ -15,6 +15,15 @@ describe('公式サイトと同じURLの下層ページ', () => {
         main.getByRole('heading', { level: 1, name: page.title }),
       ).toBeVisible();
       expect(main.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+      const menuButton = screen.getByRole('button', { name: 'メニューを開く' });
+      fireEvent.click(menuButton);
+      expect(
+        screen.getByRole('navigation', { name: '展開メニュー' }),
+      ).toBeVisible();
+      fireEvent.click(menuButton);
+      expect(
+        screen.queryByRole('navigation', { name: '展開メニュー' }),
+      ).not.toBeInTheDocument();
       expect(
         screen.getByRole('navigation', { name: 'パンくずリスト' }),
       ).toBeVisible();
