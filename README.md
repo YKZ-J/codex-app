@@ -81,7 +81,7 @@ TypeScriptはアプリ・設定ファイルともstrictモードです。明示�
 
 | アプリ     | 公開URL                                          | 公開方式                                       |
 | ---------- | ------------------------------------------------ | ---------------------------------------------- |
-| 黒岩農場   | https://ykz-j.github.io/codex-app/               | このリポジトリのGitHub Actions → Pages         |
+| 黒岩農場   | https://ykz-j.github.io/homepage-demo/           | このリポジトリのGitHub Actions → Pages         |
 | 英会話教室 | https://ykz-j.github.io/english-school-homepage/ | SSH Deploy Keyで別リポジトリの`gh-pages`へpush |
 
 ソースと依存管理はこのpnpmモノレポで維持します。公開先に送るのは各アプリのビルド成果物のみです。
@@ -99,14 +99,14 @@ TypeScriptはアプリ・設定ファイルともstrictモードです。明示�
 
 1. 変更を`main`へpushします。黒岩農場と英会話の各ワークフローが実行されます。
 2. 黒岩農場のPages Sourceは **GitHub Actions**、英会話の公開先は **Deploy from a branch → gh-pages / (root)** を維持します。
-3. 黒岩農場のデプロイ成功後、旧URL https://ykz-j.github.io/codex-app/english-school-homepage/ は削除されます。Pagesの反映・キャッシュ更新後に404になることを確認してください。リダイレクトは作成しません。
-4. 黒岩農場 https://ykz-j.github.io/codex-app/ と英会話 https://ykz-j.github.io/english-school-homepage/ が引き続き表示されることを確認します。
+3. 黒岩農場のデプロイ成功後、旧URL https://ykz-j.github.io/homepage-demo/english-school-homepage/ は削除されます。Pagesの反映・キャッシュ更新後に404になることを確認してください。リダイレクトは作成しません。
+4. 黒岩農場 https://ykz-j.github.io/homepage-demo/ と英会話 https://ykz-j.github.io/english-school-homepage/ が引き続き表示されることを確認します。
 
 必要に応じて各ワークフローの **Run workflow** から`main`を指定して再公開できます。
 
 ### パスとルーティング
 
-本番baseは黒岩農場が`/codex-app/`、英会話が`/english-school-homepage/`です。ローカル開発時のbaseは両方`/`を維持します。内部リンクとページ判定もbaseを考慮します。React Routerは使用していません。黒岩農場の静的HTML生成と英会話の複数HTMLエントリーにより、下層ページへの直接アクセス・再読み込みに対応します。新しいパスを追加するときも対応するHTMLを生成してください。
+本番baseは黒岩農場が`/homepage-demo/`、英会話が`/english-school-homepage/`です。ローカル開発時のbaseは両方`/`を維持します。内部リンクとページ判定もbaseを考慮します。React Routerは使用していません。黒岩農場の静的HTML生成と英会話の複数HTMLエントリーにより、下層ページへの直接アクセス・再読み込みに対応します。新しいパスを追加するときも対応するHTMLを生成してください。
 
 英会話の認証・公開方式の詳細は[英会話アプリのREADME](apps/english-school-homepage/README.md#github-pages)を参照してください。ホスト鍵の根拠は[GitHub公式ドキュメント](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)です。
 

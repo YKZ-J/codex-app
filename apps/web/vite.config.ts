@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig(({ mode }) => ({
-  base: mode === 'production' ? '/codex-app/' : '/',
+  base: mode === 'production' ? '/homepage-demo/' : '/',
   plugins: [
     react(),
     tailwindcss(),
