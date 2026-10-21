@@ -159,10 +159,7 @@ export default function HomePage() {
             をご覧ください♪
           </p>
         </section>
-        <section
-          className="event-section loco-event"
-          aria-labelledby="loco-title"
-        >
+        <section className="event-section" aria-labelledby="loco-title">
           <h2 id="loco-title" className="event-heading">
             ロコHAWAII
           </h2>

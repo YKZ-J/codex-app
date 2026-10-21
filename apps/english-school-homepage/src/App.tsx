@@ -1,6 +1,5 @@
-import { withoutBase } from './paths';
-import { withBase } from './paths';
-import { useRef, useState } from 'react';
+import { withBase, withoutBase } from './paths';
+import { useEffect, useRef, useState } from 'react';
 import { images, navigation } from './content';
 import HomePage from './HomePage';
 import TeachersPage from './TeachersPage';
@@ -53,6 +52,47 @@ function SchoolNavigation({ currentPath }: { currentPath: string }) {
 }
 
 export default function App() {
+  const main = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!main.current || !('IntersectionObserver' in window)) return;
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (preference.matches) return;
+
+    const targets = Array.from(
+      main.current.querySelectorAll(
+        '.welcome-panel, .about-section, .lessons-section, .social-list > li, .event-section, .inner-page-header, .page-introduction, .teacher-profile, .lesson-page-section > h3, .lesson-block, .private-details, .classroom-card, .page-next-step',
+      ),
+    );
+    const showAll = () => {
+      targets.forEach((target) => target.classList.remove('reveal-pending'));
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('reveal-pending');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0, rootMargin: '0px 0px -24px 0px' },
+    );
+
+    targets.forEach((target) => {
+      target.classList.add('scroll-reveal', 'reveal-pending');
+      observer.observe(target);
+    });
+    preference.addEventListener('change', showAll);
+    return () => {
+      observer.disconnect();
+      preference.removeEventListener('change', showAll);
+      targets.forEach((target) =>
+        target.classList.remove('scroll-reveal', 'reveal-pending'),
+      );
+    };
+  }, []);
+
   const currentPath = (
     typeof window === 'undefined' ? '/' : withoutBase(window.location.pathname)
   )
@@ -86,7 +126,16 @@ export default function App() {
           <SchoolNavigation key={currentPath} currentPath={currentPath} />
         </header>
         <div className="school-layout">
-          <main id="main" className="school-main">
+          <main
+            ref={main}
+            id="main"
+            className="school-main"
+            onFocusCapture={(event) => {
+              event.target
+                .closest('.reveal-pending')
+                ?.classList.remove('reveal-pending');
+            }}
+          >
             {page === 'home' ? (
               <HomePage />
             ) : page === 'teachers' ? (

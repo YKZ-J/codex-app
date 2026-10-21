@@ -49,6 +49,7 @@ export default function PhotoSlideshow() {
           aria-label={`${slide.alt}を拡大表示（新しいタブ）`}
         >
           <img
+            key={slide.src}
             src={slide.src}
             alt={slide.alt}
             width="850"

@@ -278,9 +278,6 @@
   .event-section > p:nth-of-type(2) {
     @apply font-bold text-ohana-deep;
   }
-  .loco-event {
-    @apply bg-[#f8faf5];
-  }
   .school-footer {
     @apply flex min-h-[210px] flex-col items-center justify-center gap-4 border-t-[5px] border-ohana-green bg-[#a9dfe9] bg-cover bg-center px-6 py-10 text-[18px] font-bold;
   }
@@ -582,17 +579,6 @@
     }
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0s !important;
-  }
-}
-
 @layer components {
   .inner-page-header {
     @apply bg-ohana-pale px-6 pt-20 pb-16 text-center;
@@ -878,5 +864,150 @@
     .classroom-card h4 {
       font-size: 19px;
     }
+  }
+}
+
+@keyframes photo-enter {
+  from {
+    opacity: 0;
+    transform: scale(1.025);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes menu-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer components {
+  .school-header {
+    @apply sticky top-0 border-b border-ohana-deep/5 bg-white/95 shadow-sm backdrop-blur-lg;
+  }
+  .school-navigation.is-open {
+    animation: menu-enter 220ms ease-out both;
+    max-height: calc(100dvh - 106px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .slide-stage {
+    @apply overflow-hidden;
+  }
+  .slide-stage img {
+    animation: photo-enter 650ms ease-out both;
+  }
+  .scroll-reveal {
+    opacity: 1;
+    translate: 0 0;
+    transition:
+      opacity 650ms ease,
+      translate 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .reveal-pending {
+    opacity: 0;
+    translate: 0 20px;
+  }
+  .reveal-pending:target,
+  .reveal-pending:has(:target),
+  .reveal-pending:focus-within {
+    opacity: 1;
+    translate: none;
+  }
+
+  .event-section,
+  .price-card,
+  .classroom-card,
+  .social-list a {
+    transition:
+      transform 250ms ease,
+      box-shadow 250ms ease,
+      border-color 250ms ease,
+      background-color 250ms ease;
+  }
+  .trial-link,
+  .page-next-step > a,
+  .school-footer a,
+  .slide-arrow,
+  .playback-control {
+    transition:
+      transform 200ms ease,
+      background-color 200ms ease,
+      box-shadow 200ms ease;
+  }
+  .trial-link:active,
+  .page-next-step > a:active,
+  .slide-arrow:active {
+    transform: scale(0.97);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .event-section:hover,
+    .price-card:hover,
+    .classroom-card:hover,
+    .social-list a:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 34px -20px #194f2b55;
+    }
+    .trial-link:hover,
+    .page-next-step > a:hover,
+    .school-footer a:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (width < 960px) {
+    .school-navigation.is-open {
+      max-height: calc(100dvh - 88px);
+    }
+    .about-section,
+    .lessons-section {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .lessons-section .lesson-detail {
+      grid-column: auto;
+    }
+  }
+  @media (width < 768px) {
+    .events-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (width < 640px) {
+    .school-navigation.is-open {
+      max-height: calc(100dvh - 80px);
+    }
+    .scroll-reveal {
+      transition-duration: 450ms;
+    }
+    .reveal-pending {
+      translate: 0 12px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .scroll-reveal,
+  .reveal-pending {
+    opacity: 1;
+    translate: none;
   }
 }

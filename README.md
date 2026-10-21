@@ -93,17 +93,16 @@ TypeScriptはアプリ・設定ファイルともstrictモードです。明示�
 
 両方ともNode.js 24・packageManager指定のpnpmを使用し、`pnpm install --frozen-lockfile`を実行します。各アプリ・`packages/**`・ルートの依存管理ファイル・それぞれのワークフローが変更された`main`へのpushで自動実行します。英会話用スクリプトとホスト鍵の変更も英会話のデプロイ対象です。公開先ごとにconcurrencyを分け、同じ公開先のデプロイは順番に実行します。Actionsから`main`を選んで手動実行もできます。
 
-### 移行手順と旧URLの保護
+### 公開と旧URLの削除
 
-現在の旧URL https://ykz-j.github.io/codex-app/english-school-homepage/ は、黒岩農場と同じPages成果物で配信されています。英会話成果物を除いた黒岩農場を公開すると旧URLが消えるため、**承認前は黒岩農場のPages公開だけを停止**します。ビルド・テストは実行します。既に公開済みの内容はそのまま残り、英会話の新ワークフローは独立して実行できます。
+新しい英会話URLの表示確認と旧URL削除のユーザー承認が完了したため、黒岩農場の公開ガードを解除しました。`ENGLISH_LEGACY_REMOVAL_APPROVED`の設定は不要です。既に登録している場合もワークフローでは参照しません。
 
-1. 変更を`main`へpushします。必要ならActionsの **Deploy English school → Run workflow** を実行します。
-2. 英会話の公開先リポジトリSettings → PagesでSourceを **Deploy from a branch**、Branchを **gh-pages / (root)** にします。初回実行でブランチが作成されるため、その後に選択できます。公開先の`main`は変更しません。
-3. 新URLのトップ、`p/2/`、`p/3/`への直接アクセス・再読み込み・内部リンク・画像を確認します。旧URLもこの時点では維持されます。
-4. **旧URLの削除についてユーザーの承認を得てから**、元リポジトリSettings → Secrets and variables → Actions → Variablesに`ENGLISH_LEGACY_REMOVAL_APPROVED`を値`true`で登録します。未設定またはそれ以外の値なら黒岩農場の公開をスキップします。
-5. 元リポジトリのPages Sourceは **GitHub Actions** を維持し、Actionsの **Deploy Kuroiwa Farm to GitHub Pages → Run workflow** を実行します。これ以降は関連変更のpushで黒岩農場も自動更新します。この公開で旧英会話URLは削除され、黒岩農場のURLは変わりません。
+1. 変更を`main`へpushします。黒岩農場と英会話の各ワークフローが実行されます。
+2. 黒岩農場のPages Sourceは **GitHub Actions**、英会話の公開先は **Deploy from a branch → gh-pages / (root)** を維持します。
+3. 黒岩農場のデプロイ成功後、旧URL https://ykz-j.github.io/codex-app/english-school-homepage/ は削除されます。Pagesの反映・キャッシュ更新後に404になることを確認してください。リダイレクトは作成しません。
+4. 黒岩農場 https://ykz-j.github.io/codex-app/ と英会話 https://ykz-j.github.io/english-school-homepage/ が引き続き表示されることを確認します。
 
-旧URLを残す、またはリダイレクトする場合は、この変数を設定せず別途移行方針を決めてください。推奨は新URLの確認後、承認を得たうえで旧URLに新URLへの案内を一定期間置く方法です。現時点では削除・リダイレクトは実施していません。
+必要に応じて各ワークフローの **Run workflow** から`main`を指定して再公開できます。
 
 ### パスとルーティング
 
