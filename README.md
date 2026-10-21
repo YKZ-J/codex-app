@@ -1,6 +1,11 @@
-# 黒岩農場 トップページ再現
+# Homepage Workspace
 
-[参照サイト](https://kuroiwafarm.co.jp/)のトップページをもとにしたReact + TypeScriptの実装です。Vite公式の `react-ts` テンプレート構成をベースに、Tailwind CSS、テスト、整形設定を追加しています。
+pnpm workspacesで管理する、Vite + React + TypeScriptの独立したWebアプリ群です。Tailwind CSS、ESLint、Vitest、React Testing Libraryを各アプリで使用し、リポジトリ全体の整形はPrettierで行います。
+
+| 配置先                          | パッケージ名              | 内容                                                               | 開発ポート | ビルド出力先                         |
+| ------------------------------- | ------------------------- | ------------------------------------------------------------------ | ---------- | ------------------------------------ |
+| `apps/web/`                     | `simple-homepage`         | [黒岩農場](https://kuroiwafarm.co.jp/)のトップページ再現           | 5173       | `apps/web/dist/`                     |
+| `apps/english-school-homepage/` | `english-school-homepage` | [Ohana英会話](https://ohanaeikaiwa.crayon1.com/)のトップページ再現 | 5174       | `apps/english-school-homepage/dist/` |
 
 ## 開発環境
 
@@ -16,42 +21,53 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-開発サーバーの標準URLは http://localhost:5173 です。終了は `Ctrl+C`。
+コマンドはリポジトリのルートから実行してください。`pnpm dev`は`apps/web/`を起動します（標準URLは http://localhost:5173 ）。終了は`Ctrl+C`です。
 
 ## コマンド
 
-| コマンド          | 内容                                                 |
-| ----------------- | ---------------------------------------------------- |
-| `pnpm dev`        | 開発サーバー起動                                     |
-| `pnpm lint`       | ESLint（型情報を使用）とPrettierチェック             |
-| `pnpm test`       | Vitest + React Testing Libraryによる単発テスト       |
-| `pnpm test:watch` | テストの監視実行                                     |
-| `pnpm build`      | TypeScript型チェックと本番ビルド（`apps/web/dist/`） |
-| `pnpm preview`    | ビルド成果物のローカル配信                           |
-| `pnpm format`     | Prettierで整形                                       |
+| コマンド                         | 内容                                                       |
+| -------------------------------- | ---------------------------------------------------------- |
+| `pnpm install --frozen-lockfile` | 単一ロックファイルに従って全ワークスペースをインストール   |
+| `pnpm dev`                       | `simple-homepage`の開発サーバー起動                        |
+| `pnpm lint`                      | 各ワークスペースのESLintとリポジトリ全体のPrettierチェック |
+| `pnpm test`                      | 各ワークスペースの単発テスト                               |
+| `pnpm test:watch`                | `simple-homepage`のテスト監視実行                          |
+| `pnpm build`                     | 各ワークスペースの型チェックと本番ビルド                   |
+| `pnpm preview`                   | `simple-homepage`のビルド成果物を配信                      |
+| `pnpm format`                    | リポジトリ全体をPrettierで整形                             |
+
+個別の操作は各アプリのパッケージ名を`--filter`に指定します。
+
+```sh
+pnpm --filter simple-homepage dev
+pnpm --filter simple-homepage build
+pnpm --filter english-school-homepage dev
+pnpm --filter english-school-homepage test
+```
 
 ## 構成と設計
 
 ```text
 .
 ├── apps/
-│   └── web/
-│       ├── src/              # Reactページ・表示データ・テスト・CSS
-│       ├── index.html
-│       ├── vite.config.ts    # Vite・Vitest・Tailwind CSS
-│       ├── eslint.config.js
-│       ├── tsconfig*.json
-│       └── package.json      # Webアプリの依存関係・スクリプト
-├── packages/                 # 将来の共有パッケージ用（現在は空）
-├── package.json              # 各ワークスペースへの実行入口・Prettier
+│   ├── web/                         # simple-homepage
+│   └── english-school-homepage/     # english-school-homepage
+│       # 各アプリ内にsrc/、index.html、package.json、
+│       # vite.config.ts、eslint.config.js、tsconfig*.jsonを配置
+├── packages/                        # 必要になった共有パッケージの配置先
+├── package.json                     # ワークスペース実行スクリプト・Prettier
 ├── pnpm-workspace.yaml
-├── pnpm-lock.yaml
-└── .prettierrc.json
+├── pnpm-lock.yaml                   # リポジトリで単一のロックファイル
+├── .prettierrc.json
+├── .prettierignore
+└── AGENTS.md
 ```
 
-pnpm workspacesのみで管理し、追加のモノレポツールは使用していません。上記コマンドはすべてルートから実行します。`lint`・`test`・`build`は各パッケージのスクリプトを実行し、`lint`はリポジトリ全体の整形も確認します。Webアプリだけを指定する場合は`pnpm --filter simple-homepage <command>`を使用できます。
+pnpm workspacesのみを使用し、追加のタスク実行ツールは導入していません。ルートの`lint`・`test`・`build`は各ワークスペースの対応するスクリプトを実行します。
 
-共有が必要になった時点で`packages/<name>/package.json`を追加し、利用側から`workspace:*`で参照します。現時点では共有パッケージや共通設定パッケージは追加していません。
+アプリ固有のVite・Vitest・TypeScript・ESLint設定と依存関係は各アプリ内で管理します。両アプリで同じ設定でも、現時点では不要な共通化を行わず、それぞれの独立性を維持します。Prettierなどリポジトリ全体で使用するツール・共通設定はルートで管理します。共通設定を変更した場合は、影響を受けるすべてのアプリで品質チェックを実行してください。
+
+アプリ間の直接依存は設けません。複数のアプリで共有する必要が生じたコードだけを`packages/<name>/`に切り出し、利用側から`workspace:*`で参照します。現在、共有パッケージはありません。
 
 TypeScriptはアプリ・設定ファイルともstrictモードです。明示的なanyはESLintで禁止しています。Tailwind CSS v4はViteプラグインで統合し、CSSの`@theme`でテーマを定義します。
 
@@ -68,7 +84,7 @@ TypeScriptはアプリ・設定ファイルともstrictモードです。明示�
 - 現在はGitリポジトリとして初期化済みです。この変更でコミット・pushは行っていません。
 - `pnpm dev --host 127.0.0.1` はポート待ち受けが権限エラー（`EPERM`）で拒否されました。ローカル端末で `pnpm dev` を実行し、ブラウザーでトップページを確認してください。この環境に起動中の開発サーバーはありません。
 
-## トップページの実装範囲
+## 黒岩農場アプリの実装範囲
 
 - ヘッダー、写真とキャッチコピー、農場紹介、6事業の交互レイアウト、お知らせ、オンラインショップ導線、フッターを実装しました。
 - Tailwind CSSでPC・タブレット・スマートフォン向けの配置を設定しています。

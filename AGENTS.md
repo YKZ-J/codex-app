@@ -10,16 +10,34 @@
 
 ## モノレポ構成
 
-pnpm workspacesのみを使用します。Turborepoなどのタスク実行ツールは追加しないでください。
+pnpm workspacesのみを使用します。Turborepoなどの追加タスク実行ツールは導入しないでください。
 
-- `apps/web/`: 既存のVite + React + TypeScriptアプリ。ソース、HTML、Vite・Vitest・TypeScript・ESLint設定を配置します。
-- `apps/english-school-homepage/`: Ohana英会話の参照サイトをもとにした独立アプリ。`pnpm --filter english-school-homepage dev`で起動します（ポート5174）。
-- `packages/`: 共有パッケージの配置先。実際に共有する必要が生じるまでパッケージや抽象化を作成しないでください。
-- ルート: `pnpm-workspace.yaml`、単一の`pnpm-lock.yaml`、Prettier設定、共通ドキュメントを管理します。
-- アプリの依存関係はそれぞれの`apps/*/package.json`に、リポジトリ全体の整形ツールはルートの`package.json`に記載します。
-- 共有パッケージを追加する際は`packages/<name>/package.json`を作成し、内部依存には`workspace:*`を使用してください。
-- インストールと品質チェックはルートから実行してください。`pnpm dev`はWebアプリを起動し、`pnpm lint`・`pnpm test`・`pnpm build`は各ワークスペースの既存スクリプトを実行します。
-- Webアプリのみを操作する場合は`pnpm --filter simple-homepage <command>`を使用してください。出力先は`apps/web/dist/`です。
+### ディレクトリ構成
+
+- `apps/web/`：Vite + React + TypeScriptによる既存のWebアプリ。
+- `apps/english-school-homepage/`：Ohana英会話の参照サイトをもとにした独立アプリ。`pnpm --filter english-school-homepage dev`で起動します（ポート5174）。
+- `packages/`：複数のアプリで共有するパッケージの配置先。
+- ルート：`pnpm-workspace.yaml`、単一の`pnpm-lock.yaml`、共通設定、共通ドキュメントを管理します。
+
+### 設定・依存関係の管理
+
+- アプリ固有のVite・Vitest・TypeScript・ESLint設定は各`apps/<name>/`内に配置してください。
+- 複数のアプリで共通する設定は、必要に応じてルートで一元管理してください。
+- 共通設定を変更する場合は、影響を受けるすべてのアプリとの互換性を確認してください。
+- アプリ固有の依存関係は各アプリの`package.json`に、リポジトリ全体の開発ツールはルートの`package.json`に定義してください。
+- 各アプリの独立性を維持し、アプリ間の直接依存を避けてください。
+- 共通コードは、複数のアプリで共有する必要が生じた場合のみ`packages/`に切り出してください。
+- 内部パッケージへの依存には`workspace:*`を使用してください。
+- 既存の設定やディレクトリ構成を不必要に移動・共通化しないでください。
+
+### コマンド・ビルド
+
+- インストールと品質チェックはリポジトリのルートから実行してください。
+- `pnpm dev`は`apps/web/`の開発サーバーを起動します。
+- `pnpm lint`、`pnpm test`、`pnpm build`は各ワークスペースの対応するスクリプトを実行します。
+- 個別のアプリを操作する場合は、各アプリの`package.json`に定義されたパッケージ名を`--filter`で指定してください。
+- Webアプリの操作には`pnpm --filter simple-homepage <command>`を使用してください。
+- Webアプリのビルド出力先は`apps/web/dist/`とします。
 
 ## 技術スタック
 
