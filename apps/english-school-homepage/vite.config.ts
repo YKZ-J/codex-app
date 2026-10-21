@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig(({ mode }) => ({
-  base: mode === 'production' ? '/codex-app/english-school-homepage/' : '/',
+  base: mode === 'production' ? '/english-school-homepage/' : '/',
   plugins: [react(), tailwindcss()],
   build: {
     rolldownOptions: {

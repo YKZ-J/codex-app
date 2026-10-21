@@ -49,3 +49,15 @@ Viteの複数HTMLエントリーを使用し、`dist/index.html`、`dist/p/2/ind
 参照元は[講師紹介](https://ohanaeikaiwa.crayon1.com/p/2/)と[レッスン](https://ohanaeikaiwa.crayon1.com/p/3/)です。2026年10月21日にブラウザーで確認できた本文・公開HTMLの内容をもとに、紹介文・説明文は要約・整形し、氏名、経歴、日程、料金、住所を反映しました。ページの追加に伴う、既存ホームページの本文・写真の変更はありません。
 
 レッスンページの検索取得結果とブラウザー表示に差があったため、時間割の教室名・アクセス見出しはブラウザー表示を優先しました。今後、教室の案内が更新された際は`src/lessonContent.ts`などの記載も更新してください。
+
+## GitHub Pages
+
+公開URL: https://ykz-j.github.io/english-school-homepage/
+
+ソースはこのモノレポで管理し、`.github/workflows/deploy-english-school.yml`からビルド成果物だけを`YKZ-J/english-school-homepage`の`gh-pages`へ公開します。公開先リポジトリのSettings → PagesでSourceを **Deploy from a branch**、Branchを **gh-pages / (root)** に設定してください。ブランチが存在しない場合は初回ワークフロー成功後に選択します。
+
+認証には登録済みの`ENGLISH_DEPLOY_KEY`を使います。GitHub公式のEd25519ホスト鍵を`.github/github_known_hosts`で固定し、SSHの厳密なホスト鍵検証を有効にしています。鍵の更新時はGitHub公式ドキュメントの値と照合してこのファイルを更新してください。秘密鍵はrunnerの一時ディレクトリに保存し、処理終了時に削除します。成果物のみに`.nojekyll`を追加し、公開先の`main`は変更しません。`gh-pages`は初回のみ作成し、以後は履歴を維持する通常のpushを行います。
+
+アプリ・共有パッケージ・依存管理ファイル・対応するワークフロー／デプロイスクリプトの変更で自動実行します。Actionsの **Deploy English school → Run workflow** から`main`を指定した手動実行もできます。同じ公開先のデプロイは順番に実行します。ビルド・テスト・SSH接続・pushに失敗した場合はワークフローも失敗します。
+
+本番baseは`/english-school-homepage/`、開発時は`/`です。トップページと`p/2/`、`p/3/`のHTMLを生成するため、下層ページの直接アクセスと再読み込みに対応しています。

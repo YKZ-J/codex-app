@@ -1,0 +1,52 @@
+name: Deploy English school
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/english-school-homepage/**'
+      - 'packages/**'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - 'package.json'
+      - '.npmrc'
+      - '.github/workflows/deploy-english-school.yml'
+      - '.github/scripts/deploy-english-school.sh'
+      - '.github/github_known_hosts'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-english-school-gh-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm --filter english-school-homepage lint
+      - name: Test
+        run: pnpm --filter english-school-homepage test
+      - name: Build
+        run: pnpm --filter english-school-homepage build
+      - name: Deploy to external gh-pages branch
+        env:
+          ENGLISH_DEPLOY_KEY: ${{ secrets.ENGLISH_DEPLOY_KEY }}
+        run: bash .github/scripts/deploy-english-school.sh

@@ -79,16 +79,37 @@ TypeScriptはアプリ・設定ファイルともstrictモードです。明示�
 
 ## GitHub Pagesへの公開
 
-- 黒岩農場: https://ykz-j.github.io/codex-app/
-- 英会話教室: https://ykz-j.github.io/codex-app/english-school-homepage/
+| アプリ     | 公開URL                                          | 公開方式                                       |
+| ---------- | ------------------------------------------------ | ---------------------------------------------- |
+| 黒岩農場   | https://ykz-j.github.io/codex-app/               | このリポジトリのGitHub Actions → Pages         |
+| 英会話教室 | https://ykz-j.github.io/english-school-homepage/ | SSH Deploy Keyで別リポジトリの`gh-pages`へpush |
 
-1. GitHubのリポジトリ Settings → Pages → Build and deployment → Sourceで **GitHub Actions** を選択します。
-2. この設定変更をコミットし、`main`へpushします。
-3. Actionsの「Deploy apps to GitHub Pages」が成功したら、上記URLを確認します。以後は`main`へのpushで自動更新します。Actionsの「Run workflow」から手動実行もできます。
+ソースと依存管理はこのpnpmモノレポで維持します。公開先に送るのは各アプリのビルド成果物のみです。
 
-`.github/workflows/deploy.yml`はNode.js 24・packageManager指定のpnpmを使用し、`pnpm install --frozen-lockfile`、lint、test、buildを実行します。英会話サイトのdistを`apps/web/dist/english-school-homepage/`へコピーし、`apps/web/dist`全体をPagesにデプロイします。
+### ワークフロー
 
-Viteのbaseはproductionモードだけ公開先のパスを設定し、ローカル開発では`/`を維持します。両アプリの内部リンクとページ判定はbaseを考慮します。React Routerは使用していません。黒岩農場の既存の静的HTML生成と、英会話の複数HTMLエントリーにより、下層ページへの直接アクセス・再読み込みに対応しています。新しいパスを追加する場合も対応するHTMLを生成してください。GitHub Pagesには任意のURLをindex.htmlに転送するサーバー側の設定はありません。
+- `.github/workflows/deploy.yml`：`simple-homepage`だけをLint・テスト・ビルドし、`apps/web/dist`を公式Pages Actionsで公開します。英会話サイトのビルドやコピーは行いません。
+- `.github/workflows/deploy-english-school.yml`：`english-school-homepage`だけをLint・テスト・ビルドし、`ENGLISH_DEPLOY_KEY`で`YKZ-J/english-school-homepage`の`gh-pages`へ通常のpushを行います。秘密鍵はrunnerの一時領域に置き、終了時に削除します。GitHub公式のEd25519ホスト鍵を固定し、ホスト鍵検証を必須にしています。
+
+両方ともNode.js 24・packageManager指定のpnpmを使用し、`pnpm install --frozen-lockfile`を実行します。各アプリ・`packages/**`・ルートの依存管理ファイル・それぞれのワークフローが変更された`main`へのpushで自動実行します。英会話用スクリプトとホスト鍵の変更も英会話のデプロイ対象です。公開先ごとにconcurrencyを分け、同じ公開先のデプロイは順番に実行します。Actionsから`main`を選んで手動実行もできます。
+
+### 移行手順と旧URLの保護
+
+現在の旧URL https://ykz-j.github.io/codex-app/english-school-homepage/ は、黒岩農場と同じPages成果物で配信されています。英会話成果物を除いた黒岩農場を公開すると旧URLが消えるため、**承認前は黒岩農場のPages公開だけを停止**します。ビルド・テストは実行します。既に公開済みの内容はそのまま残り、英会話の新ワークフローは独立して実行できます。
+
+1. 変更を`main`へpushします。必要ならActionsの **Deploy English school → Run workflow** を実行します。
+2. 英会話の公開先リポジトリSettings → PagesでSourceを **Deploy from a branch**、Branchを **gh-pages / (root)** にします。初回実行でブランチが作成されるため、その後に選択できます。公開先の`main`は変更しません。
+3. 新URLのトップ、`p/2/`、`p/3/`への直接アクセス・再読み込み・内部リンク・画像を確認します。旧URLもこの時点では維持されます。
+4. **旧URLの削除についてユーザーの承認を得てから**、元リポジトリSettings → Secrets and variables → Actions → Variablesに`ENGLISH_LEGACY_REMOVAL_APPROVED`を値`true`で登録します。未設定またはそれ以外の値なら黒岩農場の公開をスキップします。
+5. 元リポジトリのPages Sourceは **GitHub Actions** を維持し、Actionsの **Deploy Kuroiwa Farm to GitHub Pages → Run workflow** を実行します。これ以降は関連変更のpushで黒岩農場も自動更新します。この公開で旧英会話URLは削除され、黒岩農場のURLは変わりません。
+
+旧URLを残す、またはリダイレクトする場合は、この変数を設定せず別途移行方針を決めてください。推奨は新URLの確認後、承認を得たうえで旧URLに新URLへの案内を一定期間置く方法です。現時点では削除・リダイレクトは実施していません。
+
+### パスとルーティング
+
+本番baseは黒岩農場が`/codex-app/`、英会話が`/english-school-homepage/`です。ローカル開発時のbaseは両方`/`を維持します。内部リンクとページ判定もbaseを考慮します。React Routerは使用していません。黒岩農場の静的HTML生成と英会話の複数HTMLエントリーにより、下層ページへの直接アクセス・再読み込みに対応します。新しいパスを追加するときも対応するHTMLを生成してください。
+
+英会話の認証・公開方式の詳細は[英会話アプリのREADME](apps/english-school-homepage/README.md#github-pages)を参照してください。ホスト鍵の根拠は[GitHub公式ドキュメント](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)です。
 
 ## この実行環境で未完了の確認
 

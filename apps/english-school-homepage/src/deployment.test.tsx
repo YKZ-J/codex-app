@@ -8,11 +8,11 @@ afterEach(() => {
 });
 
 it('renders a nested page and navigation under the production base', () => {
-  vi.stubEnv('BASE_URL', '/codex-app/english-school-homepage/');
+  vi.stubEnv('BASE_URL', '/english-school-homepage/');
   window.history.replaceState(
     null,
     '',
-    '/codex-app/english-school-homepage/p/2/index.html',
+    '/english-school-homepage/p/2/index.html',
   );
   render(<App />);
   expect(
@@ -20,5 +20,5 @@ it('renders a nested page and navigation under the production base', () => {
   ).toBeVisible();
   expect(
     screen.getAllByRole('link', { name: 'Teachers(講師の紹介)' })[0],
-  ).toHaveAttribute('href', '/codex-app/english-school-homepage/p/2/');
+  ).toHaveAttribute('href', '/english-school-homepage/p/2/');
 });
