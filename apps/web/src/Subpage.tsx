@@ -36,7 +36,7 @@ export function Subpage({ path }: { path: string }) {
           </div>
         )}
         <div className="page-width">
-          <p className="eyebrow">KUROIWA FARM</p>
+          <p className="eyebrow">{page.eyebrow}</p>
           <h1>{page.title}</h1>
         </div>
       </div>
