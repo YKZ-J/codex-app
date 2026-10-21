@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from './App';
 
 beforeEach(() => {
+  window.history.replaceState(null, '', '/');
   vi.stubGlobal(
     'matchMedia',
     vi.fn(() => ({ matches: false })),
@@ -10,6 +11,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  window.history.replaceState(null, '', '/');
   vi.useRealTimers();
   vi.unstubAllGlobals();
 });
@@ -39,7 +41,7 @@ describe('Ohana英会話ホームページ', () => {
     );
     expect(
       screen.getByRole('link', { name: 'Teachers(講師の紹介)' }),
-    ).toHaveAttribute('href', 'https://ohanaeikaiwa.crayon1.com/p/2/');
+    ).toHaveAttribute('href', '/p/2/');
   });
 
   it('写真を送る・戻す・番号を指定する操作ができる', () => {
@@ -147,5 +149,88 @@ describe('Ohana英会話ホームページ', () => {
     fireEvent.click(toggle);
     fireEvent.click(homeLink);
     expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  });
+});
+
+describe('下層ページ', () => {
+  it.each(['/p/2/', '/p/2', '/p/2/index.html'])(
+    '講師ページに直接アクセスできる：%s',
+    (path) => {
+      window.history.replaceState(null, '', path);
+      render(<App />);
+      expect(
+        screen.getByRole('heading', { level: 2, name: '講師の紹介' }),
+      ).toBeVisible();
+      expect(
+        screen.getByRole('heading', { level: 3, name: 'Chad （チャド）' }),
+      ).toBeVisible();
+      expect(
+        screen.getByRole('heading', { level: 3, name: 'Miho （実穂）' }),
+      ).toBeVisible();
+      expect(
+        screen.getByRole('img', { name: 'Chad（チャド）先生' }),
+      ).toHaveAttribute('src', expect.stringContaining('/335966/637_807.jpg'));
+      expect(
+        screen.getByText(/Hawaii Pacific University, B.A. in Psychology/),
+      ).toBeVisible();
+      expect(
+        screen.getByRole('link', { name: 'Teachers(講師の紹介)' }),
+      ).toHaveAttribute('aria-current', 'page');
+      expect(
+        screen.getByRole('link', { name: 'Top page(ホーム)' }),
+      ).toHaveAttribute('href', '/');
+      expect(
+        screen.queryByRole('region', { name: '教室のフォトギャラリー' }),
+      ).not.toBeInTheDocument();
+    },
+  );
+
+  it('レッスンページに日程・料金・教室情報を表示する', () => {
+    window.history.replaceState(null, '', '/p/3/');
+    render(<App />);
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'レッスン日程＆料金' }),
+    ).toBeVisible();
+    const table = within(
+      screen.getByRole('table', {
+        name: 'グループレッスンの教室・曜日・時間・クラス',
+      }),
+    );
+    expect(table.getAllByRole('row')).toHaveLength(13);
+    expect(table.getByText('19:30〜20:30')).toBeVisible();
+    expect(table.getByText('15:30〜16:20')).toBeVisible();
+    expect(table.getByText('基礎英語（月2回のみ特別クラス）')).toBeVisible();
+    const monthly = within(
+      screen.getByRole('region', { name: '定額制（月額）' }),
+    );
+    expect(monthly.getByText('5,000')).toBeVisible();
+    expect(monthly.getByText('6,000')).toBeVisible();
+    const ticket = within(
+      screen.getByRole('region', { name: 'チケット制（１回）' }),
+    );
+    expect(ticket.getByText('1,700')).toBeVisible();
+    expect(ticket.getByText('2,000')).toBeVisible();
+    expect(screen.getByText('１回 2,700円')).toBeVisible();
+    expect(screen.getByText('講師２人での受講は800円追加')).toBeVisible();
+    expect(screen.getByText('講師宅以外での受講は300円追加')).toBeVisible();
+    expect(
+      screen.getAllByRole('link', { name: /をGoogleマップで開く/ }),
+    ).toHaveLength(4);
+    expect(
+      screen.getByRole('link', { name: 'Lessons(レッスン日程＆料金)' }),
+    ).toHaveAttribute('aria-current', 'page');
+  });
+
+  it('ホームからレッスンページへの導線がアプリ内を指す', () => {
+    render(<App />);
+    expect(
+      screen.getByRole('link', { name: '「Lessons／レッスン」' }),
+    ).toHaveAttribute('href', '/p/3/');
+    expect(
+      screen.getByRole('link', { name: 'Lessons(レッスン日程＆料金)' }),
+    ).toHaveAttribute('href', '/p/3/');
+    expect(
+      screen.getByRole('link', { name: 'Top page(ホーム)' }),
+    ).toHaveAttribute('aria-current', 'page');
   });
 });

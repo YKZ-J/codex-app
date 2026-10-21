@@ -592,3 +592,291 @@
     transition-duration: 0s !important;
   }
 }
+
+@layer components {
+  .inner-page-header {
+    @apply bg-ohana-pale px-6 pt-20 pb-16 text-center;
+  }
+  .inner-page-header > p {
+    @apply m-0 text-[14px] font-bold tracking-[.18em] text-ohana-green;
+  }
+  .inner-page-header h2 {
+    @apply mt-4 mb-0 text-[42px] leading-[1.5] font-bold tracking-[.04em] text-ohana-deep;
+  }
+  .inner-page-header::after {
+    content: '';
+    @apply mx-auto mt-7 block h-[5px] w-12 rounded-full bg-ohana-green;
+  }
+  .inner-page-body {
+    @apply mx-auto w-[calc(100%-80px)] max-w-[1120px] pt-16 pb-24;
+  }
+  .page-introduction {
+    @apply mx-auto mb-16 max-w-[860px] text-[17px] leading-[2.3];
+  }
+  .page-introduction > p {
+    @apply mt-0 mb-5;
+  }
+  .teacher-profile {
+    @apply grid grid-cols-[.7fr_1.4fr] items-start gap-16 border-t border-[#dfebd9] py-16;
+  }
+  .teacher-portrait {
+    @apply overflow-hidden rounded-[25px] bg-ohana-pale;
+  }
+  .teacher-portrait img {
+    @apply block h-auto w-full;
+  }
+  .teacher-description h3 {
+    @apply mt-0 mb-5 text-[36px] leading-[1.5] font-bold text-ohana-deep;
+  }
+  .teacher-description h3 > span {
+    @apply text-[18px];
+  }
+  .teacher-description h4 {
+    @apply mb-4 text-[15px] font-bold text-ohana-green;
+  }
+  .teacher-description > p {
+    @apply text-[15px] leading-[2.1];
+  }
+  .profile-facts {
+    @apply mt-8 rounded-2xl bg-ohana-pale px-6 py-3;
+  }
+  .profile-facts > div {
+    @apply grid grid-cols-[85px_1fr] gap-4 py-4 text-[13px] leading-[1.9];
+  }
+  .profile-facts > div + div {
+    @apply border-t border-[#dce8d6];
+  }
+  .profile-facts dt {
+    @apply font-bold text-ohana-deep;
+  }
+  .profile-facts dd {
+    @apply m-0 min-w-0;
+  }
+  .page-next-step {
+    @apply mt-12 text-center;
+  }
+  .page-next-step > a {
+    @apply inline-flex max-w-full items-center justify-center gap-8 rounded-full bg-ohana-green px-9 py-5 text-[15px] leading-[1.8] font-bold text-white transition-colors hover:bg-ohana-deep;
+  }
+  .page-next-step span {
+    @apply shrink-0 text-xl;
+  }
+  .page-section-links {
+    @apply mb-16 flex flex-wrap justify-center gap-4;
+  }
+  .page-section-links a {
+    @apply rounded-full border border-[#c7dfba] px-6 py-3 text-[14px] font-bold text-ohana-deep transition-colors hover:bg-ohana-pale;
+  }
+  .lesson-page-section {
+    @apply border-t border-[#dfebd9] pt-14 pb-12;
+    scroll-margin-top: 25px;
+  }
+  .lesson-page-section > h3 {
+    @apply mt-0 mb-7 text-[30px] leading-[1.7] font-bold text-ohana-deep;
+  }
+  .lesson-page-section > h3::before {
+    content: '';
+    @apply mb-5 block size-[10px] rounded-full bg-ohana-green;
+  }
+  .lesson-page-section > p {
+    @apply mb-6 max-w-[940px] text-[15px] leading-[2.1];
+  }
+  .lesson-block {
+    @apply mt-12;
+  }
+  .lesson-block h4 {
+    @apply mb-6 border-l-[4px] border-ohana-green pl-4 text-[21px] font-bold;
+  }
+  .lesson-block > p {
+    @apply text-[14px] leading-[2];
+  }
+  .schedule-scroll {
+    @apply my-6 max-w-full overflow-x-auto rounded-xl border border-[#dce8d6];
+  }
+  .schedule-table {
+    @apply w-full min-w-[650px] border-collapse text-left text-[13px] leading-[1.9];
+  }
+  .schedule-table th,
+  .schedule-table td {
+    @apply border-b border-[#dce8d6] px-5 py-4;
+  }
+  .schedule-table thead th {
+    @apply bg-ohana-deep text-white;
+  }
+  .schedule-table tbody th {
+    @apply w-[25%] bg-ohana-pale font-bold text-ohana-deep;
+  }
+  .schedule-table tbody:last-child tr:last-child > * {
+    @apply border-b-0;
+  }
+  .schedule-time {
+    @apply whitespace-nowrap;
+  }
+  .lesson-note {
+    @apply text-[13px] leading-[2] text-[#66745f];
+  }
+  .price-grid {
+    @apply grid grid-cols-2 gap-7;
+  }
+  .price-card {
+    @apply rounded-[22px] bg-ohana-pale p-8;
+  }
+  .price-card h5 {
+    @apply mt-0 mb-2 text-[23px] font-bold text-ohana-deep;
+  }
+  .price-card > p {
+    @apply text-[13px] leading-[2];
+  }
+  .price-card dl {
+    @apply mt-6 mb-0;
+  }
+  .price-card dl > div {
+    @apply flex flex-wrap items-center justify-between gap-3 border-t border-[#d3e3ca] py-4;
+  }
+  .price-card dt {
+    @apply text-[14px] font-bold;
+  }
+  .price-card dd {
+    @apply m-0 text-[30px] leading-[1.4] font-bold text-ohana-deep;
+  }
+  .price-card dd > span {
+    @apply ml-1 text-[15px];
+  }
+  .lesson-notes {
+    @apply my-5 list-disc space-y-2 pl-5 text-[13px] leading-[2] text-[#5b6855];
+  }
+  .private-details {
+    @apply mt-9 overflow-hidden rounded-2xl border border-[#dce8d6];
+  }
+  .private-details > div {
+    @apply grid grid-cols-[150px_1fr];
+  }
+  .private-details > div + div {
+    @apply border-t border-[#dce8d6];
+  }
+  .private-details dt {
+    @apply bg-ohana-pale p-6 text-[14px] font-bold text-ohana-deep;
+  }
+  .private-details dd {
+    @apply m-0 min-w-0 p-6 text-[14px] leading-[2.1];
+  }
+  .private-details strong {
+    @apply text-[23px] text-ohana-deep;
+  }
+  .classroom-grid {
+    @apply grid grid-cols-2 gap-7;
+  }
+  .classroom-card {
+    @apply flex flex-col items-start rounded-[22px] border border-[#dce8d6] p-8;
+  }
+  .classroom-card h4 {
+    @apply mt-0 mb-4 text-[20px] leading-[1.7] font-bold text-ohana-deep;
+  }
+  .classroom-card > p {
+    @apply m-0 text-[14px];
+  }
+  .classroom-card ul {
+    @apply mt-4 mb-6 list-none space-y-1 p-0 text-[13px] text-[#66745f];
+  }
+  .classroom-card a {
+    @apply mt-auto flex items-center gap-6 border-b border-[#9bcf83] pb-1 text-[13px] font-bold text-ohana-deep hover:text-ohana-green;
+  }
+
+  @media (width < 768px) {
+    .inner-page-header {
+      padding-block: 45px 40px;
+    }
+    .inner-page-header h2 {
+      font-size: 29px;
+    }
+    .inner-page-header > p {
+      font-size: 12px;
+    }
+    .inner-page-body {
+      width: calc(100% - 40px);
+      padding-block: 40px 60px;
+    }
+    .page-introduction {
+      margin-bottom: 35px;
+      font-size: 14px;
+      line-height: 2.1;
+    }
+    .teacher-profile {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      padding-block: 40px;
+    }
+    .teacher-portrait {
+      width: min(100%, 300px);
+      margin-inline: auto;
+    }
+    .teacher-description h3 {
+      font-size: 30px;
+    }
+    .teacher-description > p {
+      font-size: 14px;
+    }
+    .profile-facts {
+      padding: 10px 18px;
+    }
+    .profile-facts > div {
+      grid-template-columns: 1fr;
+      gap: 6px;
+      font-size: 12px;
+    }
+    .page-next-step > a {
+      gap: 18px;
+      padding: 17px 23px;
+      font-size: 13px;
+    }
+    .page-section-links {
+      margin-bottom: 35px;
+      gap: 10px;
+    }
+    .page-section-links a {
+      padding: 10px 17px;
+      font-size: 12px;
+    }
+    .lesson-page-section {
+      padding-block: 35px;
+    }
+    .lesson-page-section > h3 {
+      font-size: 24px;
+    }
+    .lesson-page-section > p {
+      font-size: 14px;
+    }
+    .lesson-block {
+      margin-top: 30px;
+    }
+    .lesson-block h4 {
+      font-size: 19px;
+    }
+    .price-grid,
+    .classroom-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .price-card {
+      padding: 25px;
+    }
+    .price-card h5 {
+      font-size: 21px;
+    }
+    .private-details > div {
+      grid-template-columns: 1fr;
+    }
+    .private-details dt {
+      padding: 12px 20px;
+    }
+    .private-details dd {
+      padding: 20px;
+    }
+    .classroom-card {
+      padding: 25px;
+    }
+    .classroom-card h4 {
+      font-size: 19px;
+    }
+  }
+}

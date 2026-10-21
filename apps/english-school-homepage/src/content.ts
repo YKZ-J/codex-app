@@ -1,5 +1,4 @@
 const imageOrigin = 'https://crimg-world.e-shops.jp/cms-dimg';
-export const schoolSite = 'https://ohanaeikaiwa.crayon1.com';
 
 export const images = {
   header: `${imageOrigin}/shared-library/671/970_150.jpg`,
@@ -26,9 +25,9 @@ export const slides = [
 ];
 
 export const navigation = [
-  { label: 'Top page(ホーム)', href: '#top' },
-  { label: 'Teachers(講師の紹介)', href: `${schoolSite}/p/2/` },
-  { label: 'Lessons(レッスン日程＆料金)', href: `${schoolSite}/p/3/` },
+  { label: 'Top page(ホーム)', href: '/' },
+  { label: 'Teachers(講師の紹介)', href: '/p/2/' },
+  { label: 'Lessons(レッスン日程＆料金)', href: '/p/3/' },
 ];
 
 export const socialLinks = {
