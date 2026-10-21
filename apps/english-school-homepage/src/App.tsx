@@ -54,32 +54,36 @@ export default function App() {
       </a>
       <div className="top-strip" aria-hidden="true" />
       <div id="top" className="school-page">
-        <header
-          className="school-header"
-          style={{ backgroundImage: `url(${images.header})` }}
-        >
-          <h1>
-            <a href="#top">Ohana英会話</a>
-          </h1>
+        <header className="school-header">
+          <div className="school-brand">
+            <img
+              src={images.logo}
+              alt="Ohana英会話のカラフルなロゴ"
+              width="738"
+              height="738"
+            />
+            <h1>
+              <a href="#top">Ohana英会話</a>
+            </h1>
+          </div>
+          <SchoolNavigation />
         </header>
         <div className="school-layout">
-          <SchoolNavigation />
           <main id="main" className="school-main">
-            <PhotoSlideshow />
-            <section className="welcome-panel" aria-labelledby="welcome-title">
-              <img
-                src={images.logo}
-                alt="Ohana英会話のカラフルなロゴ"
-                width="738"
-                height="738"
-              />
-              <div>
+            <div className="school-hero">
+              <PhotoSlideshow />
+              <div className="hero-copy">
+                <p className="hero-greeting">
+                  Welcome to Ohana English School!!
+                </p>
                 <h2 id="welcome-title" className="accent-heading">
                   ハワイ出身講師と学ぶ英会話教室
                 </h2>
+              </div>
+            </div>
+            <section className="welcome-panel" aria-labelledby="welcome-title">
+              <div>
                 <p>
-                  Welcome to Ohana English School!!
-                  <br />
                   ようこそOhana英会話へ！！
                   <br />
                   英語を始めたいけれど、きっかけが見つからなかった方。
@@ -185,76 +189,84 @@ export default function App() {
                 </a>
               </li>
             </ul>
-            <section className="event-section" aria-labelledby="festival-title">
-              <h2 id="festival-title" className="event-heading">
-                <a href={socialLinks.festival}>
-                  Ohanaになろう〜ハワイフェスティバル〜
-                </a>
-              </h2>
-              <p>
-                札幌でハワイを身近に感じるイベント「Ohanaになろう」。2012年から続くお祭りに、フラやタヒチアンダンス、ウクレレのステージ、ハワイにまつわるショップが集まります。
-              </p>
-              <p>
-                ★次回開催★
-                <br />
-                Ohanaになろう vol.15
-                <br />
-                〜ハワイフェスティバル〜
-              </p>
-              <p>
-                ●日時
-                <br />
-                <time dateTime="2027-03-27">2027年3月27日(土)11時〜</time>
-                <br />
-                <time dateTime="2027-03-28">28日(日)10時〜</time>
-              </p>
-              <p>
-                ●場所
-                <br />
-                さっぽろ創世スクエア
-                <br />
-                札幌市民交流プラザ1階
-                <br />
-                （スカーツコート・モール）
-              </p>
-              <p>
-                イベントの様子やお知らせは、
-                <br />
-                <a className="underlined-link" href={socialLinks.festival}>
-                  Ohanaになろう公式Instagram
-                </a>
-                をご覧ください♪
-              </p>
-            </section>
-            <section
-              className="event-section loco-event"
-              aria-labelledby="loco-title"
-            >
-              <h2 id="loco-title" className="event-heading">
-                ロコHAWAII
-              </h2>
-              <p>
-                Ohana英会話の拠点、札幌市西区で楽しむハワイイベント。フラやウクレレ、ショップ、フードがそろいます。Ohana英会話のブースでは、マラサダやスパムむすび、ハワイコーヒーなどをご用意します。
-              </p>
-              <p>入場無料。どなたでもお気軽にどうぞ！</p>
-              <p>★第4回 ロコHAWAII★</p>
-              <p>
-                ●日時
-                <br />
-                <time dateTime="2026-07-25">2026年7月25日(土)</time>・
-                <time dateTime="2026-07-26">26日(日)</time>
-              </p>
-              <p>
-                ●場所
-                <br />
-                シーナシーナ琴似 1階
-                <br />
-                （JR琴似駅直結）
-              </p>
-            </section>
+            <div className="events-grid">
+              <section
+                className="event-section"
+                aria-labelledby="festival-title"
+              >
+                <h2 id="festival-title" className="event-heading">
+                  <a href={socialLinks.festival}>
+                    Ohanaになろう〜ハワイフェスティバル〜
+                  </a>
+                </h2>
+                <p>
+                  札幌でハワイを身近に感じるイベント「Ohanaになろう」。2012年から続くお祭りに、フラやタヒチアンダンス、ウクレレのステージ、ハワイにまつわるショップが集まります。
+                </p>
+                <p>
+                  ★次回開催★
+                  <br />
+                  Ohanaになろう vol.15
+                  <br />
+                  〜ハワイフェスティバル〜
+                </p>
+                <p>
+                  ●日時
+                  <br />
+                  <time dateTime="2027-03-27">2027年3月27日(土)11時〜</time>
+                  <br />
+                  <time dateTime="2027-03-28">28日(日)10時〜</time>
+                </p>
+                <p>
+                  ●場所
+                  <br />
+                  さっぽろ創世スクエア
+                  <br />
+                  札幌市民交流プラザ1階
+                  <br />
+                  （スカーツコート・モール）
+                </p>
+                <p>
+                  イベントの様子やお知らせは、
+                  <br />
+                  <a className="underlined-link" href={socialLinks.festival}>
+                    Ohanaになろう公式Instagram
+                  </a>
+                  をご覧ください♪
+                </p>
+              </section>
+              <section
+                className="event-section loco-event"
+                aria-labelledby="loco-title"
+              >
+                <h2 id="loco-title" className="event-heading">
+                  ロコHAWAII
+                </h2>
+                <p>
+                  Ohana英会話の拠点、札幌市西区で楽しむハワイイベント。フラやウクレレ、ショップ、フードがそろいます。Ohana英会話のブースでは、マラサダやスパムむすび、ハワイコーヒーなどをご用意します。
+                </p>
+                <p>入場無料。どなたでもお気軽にどうぞ！</p>
+                <p>★第4回 ロコHAWAII★</p>
+                <p>
+                  ●日時
+                  <br />
+                  <time dateTime="2026-07-25">2026年7月25日(土)</time>・
+                  <time dateTime="2026-07-26">26日(日)</time>
+                </p>
+                <p>
+                  ●場所
+                  <br />
+                  シーナシーナ琴似 1階
+                  <br />
+                  （JR琴似駅直結）
+                </p>
+              </section>
+            </div>
           </main>
         </div>
-        <footer className="school-footer">
+        <footer
+          className="school-footer"
+          style={{ backgroundImage: `url(${images.header})` }}
+        >
           <a href="mailto:ohanaeikaiwa@gmail.com">ohanaeikaiwa@gmail.com</a>
           <a href="tel:08060878649">080-6087-8649</a>
         </footer>
