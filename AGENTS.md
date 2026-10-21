@@ -8,6 +8,19 @@
 
 不必要な複雑化や早すぎる抽象化を避けてください。
 
+## モノレポ構成
+
+pnpm workspacesのみを使用します。Turborepoなどのタスク実行ツールは追加しないでください。
+
+- `apps/web/`: 既存のVite + React + TypeScriptアプリ。ソース、HTML、Vite・Vitest・TypeScript・ESLint設定を配置します。
+- `apps/english-school-homepage/`: Ohana英会話の参照サイトをもとにした独立アプリ。`pnpm --filter english-school-homepage dev`で起動します（ポート5174）。
+- `packages/`: 共有パッケージの配置先。実際に共有する必要が生じるまでパッケージや抽象化を作成しないでください。
+- ルート: `pnpm-workspace.yaml`、単一の`pnpm-lock.yaml`、Prettier設定、共通ドキュメントを管理します。
+- アプリの依存関係はそれぞれの`apps/*/package.json`に、リポジトリ全体の整形ツールはルートの`package.json`に記載します。
+- 共有パッケージを追加する際は`packages/<name>/package.json`を作成し、内部依存には`workspace:*`を使用してください。
+- インストールと品質チェックはルートから実行してください。`pnpm dev`はWebアプリを起動し、`pnpm lint`・`pnpm test`・`pnpm build`は各ワークスペースの既存スクリプトを実行します。
+- Webアプリのみを操作する場合は`pnpm --filter simple-homepage <command>`を使用してください。出力先は`apps/web/dist/`です。
+
 ## 技術スタック
 
 - Node.js 24

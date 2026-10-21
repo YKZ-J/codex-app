@@ -1,5 +1,5 @@
-node_modules/
+**/node_modules/
 .pnpm-store/
-dist/
-coverage/
+**/dist/
+**/coverage/
 pnpm-lock.yaml

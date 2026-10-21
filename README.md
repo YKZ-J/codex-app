@@ -20,27 +20,38 @@ pnpm dev
 
 ## コマンド
 
-| コマンド          | 内容                                           |
-| ----------------- | ---------------------------------------------- |
-| `pnpm dev`        | 開発サーバー起動                               |
-| `pnpm lint`       | ESLint（型情報を使用）とPrettierチェック       |
-| `pnpm test`       | Vitest + React Testing Libraryによる単発テスト |
-| `pnpm test:watch` | テストの監視実行                               |
-| `pnpm build`      | TypeScript型チェックと本番ビルド（`dist/`）    |
-| `pnpm preview`    | ビルド成果物のローカル配信                     |
-| `pnpm format`     | Prettierで整形                                 |
+| コマンド          | 内容                                                 |
+| ----------------- | ---------------------------------------------------- |
+| `pnpm dev`        | 開発サーバー起動                                     |
+| `pnpm lint`       | ESLint（型情報を使用）とPrettierチェック             |
+| `pnpm test`       | Vitest + React Testing Libraryによる単発テスト       |
+| `pnpm test:watch` | テストの監視実行                                     |
+| `pnpm build`      | TypeScript型チェックと本番ビルド（`apps/web/dist/`） |
+| `pnpm preview`    | ビルド成果物のローカル配信                           |
+| `pnpm format`     | Prettierで整形                                       |
 
 ## 構成と設計
 
 ```text
-src/
-├── main.tsx          # Reactの起動
-├── App.tsx           # トップページの表示
-├── App.test.tsx      # セクション表示・メニュー操作のテスト
-├── content.ts        # 事業・ニュース・画像URLなどの表示データ
-├── index.css         # Tailwind CSSの読み込みと基本スタイル
-└── test/setup.ts     # DOM matcherとテスト後のcleanup
+.
+├── apps/
+│   └── web/
+│       ├── src/              # Reactページ・表示データ・テスト・CSS
+│       ├── index.html
+│       ├── vite.config.ts    # Vite・Vitest・Tailwind CSS
+│       ├── eslint.config.js
+│       ├── tsconfig*.json
+│       └── package.json      # Webアプリの依存関係・スクリプト
+├── packages/                 # 将来の共有パッケージ用（現在は空）
+├── package.json              # 各ワークスペースへの実行入口・Prettier
+├── pnpm-workspace.yaml
+├── pnpm-lock.yaml
+└── .prettierrc.json
 ```
+
+pnpm workspacesのみで管理し、追加のモノレポツールは使用していません。上記コマンドはすべてルートから実行します。`lint`・`test`・`build`は各パッケージのスクリプトを実行し、`lint`はリポジトリ全体の整形も確認します。Webアプリだけを指定する場合は`pnpm --filter simple-homepage <command>`を使用できます。
+
+共有が必要になった時点で`packages/<name>/package.json`を追加し、利用側から`workspace:*`で参照します。現時点では共有パッケージや共通設定パッケージは追加していません。
 
 TypeScriptはアプリ・設定ファイルともstrictモードです。明示的なanyはESLintで禁止しています。Tailwind CSS v4はViteプラグインで統合し、CSSの`@theme`でテーマを定義します。
 
@@ -48,7 +59,7 @@ TypeScriptはアプリ・設定ファイルともstrictモードです。明示�
 
 ## 初期構築時の補足
 
-実行環境からnpmレジストリの名前解決ができなかったため、ローカルキャッシュの安定版を利用してインストールしました。依存バージョンは`package.json`で固定し、推移的依存は`pnpm-lock.yaml`に記録しています。ネットワークを利用できる環境では上記の通常のインストール手順を使用してください。
+実行環境からnpmレジストリの名前解決ができなかったため、ローカルキャッシュの安定版を利用してインストールしました。依存バージョンは各`package.json`で固定し、推移的依存は`pnpm-lock.yaml`に記録しています。ネットワークを利用できる環境では上記の通常のインストール手順を使用してください。
 
 公開先やCIの設定は含めていません。
 
@@ -65,3 +76,13 @@ TypeScriptはアプリ・設定ファイルともstrictモードです。明示�
 - 写真は参照サイトの画像URLを使用しています。ローカル保存はできていないため、表示には参照サイトへの接続が必要です。
 - ロゴは文字組みによる近似です。事業説明の本文は要約しています。下層ページは作成しておらず、関連リンクは参照サイトへ移動します。
 - 参照サイトのスクリーンショット・CSSの取得とブラウザー実表示の確認ができていないため、余白・書体・色・画像位置の完全一致は未検証です。
+
+## 英会話教室アプリ
+
+`apps/english-school-homepage/`に[Ohana英会話](https://ohanaeikaiwa.crayon1.com/)の見た目をもとにしたアプリを追加しています。
+
+```sh
+pnpm --filter english-school-homepage dev
+```
+
+開発URLは http://localhost:5174 です。既存の`pnpm dev`は従来どおり`apps/web/`を起動します。ルートの`pnpm lint`・`pnpm test`・`pnpm build`は両方のアプリを対象にします。詳細は[英会話アプリのREADME](apps/english-school-homepage/README.md)を参照してください。

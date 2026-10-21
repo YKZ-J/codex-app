@@ -1,0 +1,334 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: Arial, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+  --color-ohana-ink: #0a1c33;
+  --color-ohana-blue: #438dc0;
+  --color-ohana-pale: #cff3fa;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply m-0 min-w-[320px] bg-white font-sans text-ohana-ink;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  a {
+    @apply text-inherit no-underline;
+  }
+  button {
+    @apply cursor-pointer;
+    font: inherit;
+  }
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible {
+    outline: 3px solid #155a83;
+    outline-offset: 4px;
+  }
+  a:hover {
+    @apply underline;
+  }
+}
+
+@layer components {
+  .skip-link {
+    @apply fixed top-2 left-2 z-50 -translate-y-24 bg-white px-4 py-3 focus:translate-y-0;
+  }
+  .top-strip {
+    @apply h-[3px] bg-[#9b1493];
+  }
+  .school-page {
+    @apply mx-auto w-full max-w-[850px];
+  }
+  .school-header {
+    @apply flex h-[131px] items-center justify-center bg-[#a9dfe9] bg-no-repeat text-white;
+    background-size: 100% auto;
+  }
+  .school-header h1 {
+    @apply m-0 text-[40px] leading-tight font-bold;
+  }
+  .school-header a:hover {
+    @apply no-underline;
+  }
+  .school-layout {
+    @apply grid grid-cols-[200px_minmax(0,1fr)] gap-[13px];
+  }
+  .school-sidebar {
+    @apply min-w-0;
+  }
+  .school-navigation {
+    @apply flex flex-col gap-[2px];
+  }
+  .school-navigation a {
+    @apply block border-l-[8px] border-[#172f4b] bg-[#e1ebf5] px-[7px] py-[5px] leading-[1.5] text-[#353535] hover:bg-[#cfdfed] hover:no-underline;
+    overflow-wrap: anywhere;
+  }
+  .school-main {
+    @apply min-w-0 px-[2px] pb-8;
+  }
+  .mobile-menu {
+    @apply hidden;
+  }
+  .slideshow {
+    @apply mb-6;
+  }
+  .slide-stage {
+    @apply relative mx-auto w-4/5 bg-[#e1ebf5];
+    aspect-ratio: 4/3;
+  }
+  .slide-stage > a {
+    @apply block h-full w-full;
+  }
+  .slide-stage img {
+    @apply h-full w-full object-contain;
+  }
+  .slide-arrow {
+    @apply absolute top-1/2 flex size-9 -translate-y-1/2 items-center justify-center rounded-full border-0 bg-[#777]/80 p-0 text-white hover:bg-[#555];
+  }
+  .slide-arrow.previous {
+    @apply left-0;
+  }
+  .slide-arrow.next {
+    @apply right-0;
+  }
+  .slide-arrow span {
+    @apply block size-4 rotate-45 border-t-[4px] border-r-[4px] border-white/80;
+  }
+  .slide-arrow.previous span {
+    @apply ml-2 rotate-[-135deg];
+  }
+  .slide-arrow.next span {
+    @apply mr-2;
+  }
+  .slide-controls {
+    @apply relative mx-auto flex h-[44px] w-4/5 items-center justify-center;
+  }
+  .slide-dots {
+    @apply flex items-center;
+  }
+  .slide-dots button {
+    @apply flex h-8 w-4 items-center justify-center border-0 bg-transparent p-0;
+  }
+  .slide-dots span {
+    @apply block size-[10px] rounded-full bg-[#999];
+  }
+  .slide-dots [aria-current='true'] span {
+    @apply bg-black;
+  }
+  .playback-control {
+    @apply absolute right-0 flex size-8 items-center justify-center rounded-sm border-0 bg-transparent text-base text-[#666] hover:bg-[#e1ebf5];
+  }
+  .welcome-panel {
+    @apply flex items-start gap-[6px] p-[6px];
+    background: linear-gradient(#bfeef7, #fff);
+  }
+  .welcome-panel > img {
+    @apply block h-auto w-[30%] shrink-0;
+  }
+  .welcome-panel > div {
+    @apply min-w-0 flex-1;
+  }
+  .accent-heading {
+    @apply m-0 border-l-[10px] border-ohana-blue pl-[5px] text-[22px] leading-[1.35] font-bold;
+  }
+  .welcome-panel p {
+    @apply mt-3 mb-0 text-[18px] leading-[1.5];
+  }
+  .dotted-divider {
+    @apply my-8 border-t-[3px] border-dotted border-[#aaa];
+  }
+  .about-section > h2 {
+    @apply mt-0 mb-[6px] text-center text-[18px] font-bold underline;
+  }
+  .blue-panel {
+    @apply border-[4px] border-double border-ohana-blue bg-ohana-pale px-[5px] py-[6px] text-center text-[18px] leading-[1.5];
+  }
+  .blue-panel p {
+    @apply m-0;
+  }
+  .blue-panel p + p {
+    @apply mt-[27px];
+  }
+  .renovation-note {
+    @apply text-[16px];
+  }
+  .lessons-section h2 {
+    @apply text-[18px] leading-[1.5];
+  }
+  .lessons-section > p {
+    @apply mt-4 mb-0 text-[18px] leading-[1.5];
+  }
+  .lessons-section .lesson-detail {
+    @apply mt-7;
+  }
+  .lesson-detail a,
+  .trial-link,
+  .underlined-link {
+    @apply underline decoration-1 underline-offset-2;
+  }
+  .social-list {
+    @apply m-0 mb-5 list-none p-0;
+  }
+  .social-list li {
+    @apply border-b border-[#ccc];
+  }
+  .social-list a {
+    @apply flex min-h-12 items-center gap-2 py-2 text-[14px] hover:bg-[#f5fbfd] hover:no-underline;
+  }
+  .social-list a > span:last-child {
+    @apply ml-auto pr-2 text-xl text-[#444];
+  }
+  .social-icon {
+    @apply inline-flex size-[30px] shrink-0 items-center justify-center text-[27px] leading-none font-bold;
+  }
+  .instagram {
+    @apply rounded-[7px] bg-linear-to-tr from-[#f8ca54] via-[#dd3283] to-[#7856c6] text-white;
+  }
+  .facebook {
+    @apply rounded-sm bg-[#3c5d98] font-serif text-white;
+  }
+  .event-section {
+    @apply mb-5;
+  }
+  .event-heading {
+    @apply m-0 border border-[#387ba9] border-l-[10px] bg-ohana-blue px-[5px] py-[5px] text-center text-[18px] font-bold text-white;
+  }
+  .event-section > p {
+    @apply my-5 text-[18px] leading-[1.5];
+  }
+  .loco-event > p {
+    @apply text-[#444] leading-[1.8];
+  }
+  .school-footer {
+    @apply flex flex-col items-center gap-3 bg-ohana-pale px-4 py-7 text-[18px];
+  }
+
+  @media (width < 768px) {
+    .top-strip {
+      height: 3px;
+    }
+    .school-header {
+      width: 100%;
+      height: 100px;
+      min-height: 0;
+      aspect-ratio: auto;
+      background-size: cover;
+      background-position: center;
+    }
+    .school-header h1 {
+      font-size: clamp(27px, 6vw, 40px);
+    }
+    .school-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .school-sidebar {
+      padding: 7px 10px;
+    }
+    .mobile-menu {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #bdd6e6;
+      border-radius: 3px;
+      background: #e1ebf5;
+      padding: 7px 11px;
+      font-size: 15px;
+    }
+    .mobile-menu > span:last-child {
+      font-size: 21px;
+      line-height: 1;
+    }
+    .school-navigation {
+      display: none;
+      margin-top: 5px;
+    }
+    .school-navigation.is-open {
+      display: flex;
+    }
+    .school-navigation a {
+      min-height: 40px;
+      padding: 8px;
+      font-size: 14px;
+    }
+    .school-main {
+      padding-inline: 10px;
+    }
+    .slideshow {
+      margin-top: 7px;
+      margin-bottom: 16px;
+    }
+    .slide-stage,
+    .slide-controls {
+      width: 90%;
+    }
+    .welcome-panel {
+      gap: 7px;
+    }
+    .accent-heading {
+      font-size: 18px;
+      border-left-width: 7px;
+    }
+    .welcome-panel p {
+      margin-top: 9px;
+      font-size: 15px;
+    }
+    .dotted-divider {
+      margin-block: 25px;
+    }
+    .blue-panel,
+    .lessons-section > p,
+    .event-section > p {
+      font-size: 16px;
+      overflow-wrap: anywhere;
+    }
+    .renovation-note {
+      font-size: 13px;
+    }
+    .about-section > h2,
+    .lessons-section h2,
+    .event-heading {
+      font-size: 17px;
+    }
+    .event-heading {
+      text-align: left;
+    }
+    .social-list a {
+      font-size: 13px;
+    }
+    .school-footer {
+      font-size: 16px;
+    }
+  }
+  @media (width < 420px) {
+    .welcome-panel {
+      display: block;
+    }
+    .welcome-panel > img {
+      float: left;
+      width: 30%;
+      margin: 0 10px 5px 0;
+    }
+    .welcome-panel::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+    .welcome-panel p {
+      line-height: 1.7;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
