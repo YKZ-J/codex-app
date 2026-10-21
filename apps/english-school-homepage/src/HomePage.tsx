@@ -1,3 +1,4 @@
+import { withBase } from './paths';
 import { socialLinks } from './content';
 import PhotoSlideshow from './PhotoSlideshow';
 
@@ -85,7 +86,7 @@ export default function HomePage() {
         </p>
         <p className="lesson-detail">
           ♪日程や料金は
-          <a href="/p/3/">「Lessons／レッスン」</a>
+          <a href={withBase('/p/3/')}>「Lessons／レッスン」</a>
           でご確認ください。
         </p>
       </section>

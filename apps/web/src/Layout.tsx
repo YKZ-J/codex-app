@@ -1,3 +1,4 @@
+import { withBase } from './paths';
 import { useEffect, useRef, useState } from 'react';
 import { navigation } from './content';
 
@@ -7,9 +8,9 @@ export function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 
 function Wordmark() {
   return (
-    <a className="wordmark" href="/" aria-label="黒岩農場 ホーム">
+    <a className="wordmark" href={withBase('/')} aria-label="黒岩農場 ホーム">
       <img
-        src="/images/kuroiwa-logo.png"
+        src={withBase('/images/kuroiwa-logo.png')}
         alt="株式会社黒岩農場"
         width="1734"
         height="372"
@@ -69,9 +70,11 @@ export function Header() {
         {navigation.slice(1).map((item) => (
           <a
             key={item.label}
-            href={item.href}
+            href={withBase(item.href)}
             aria-current={
-              item.href === window.location.pathname ? 'page' : undefined
+              withBase(item.href) === window.location.pathname
+                ? 'page'
+                : undefined
             }
           >
             {item.label}
@@ -111,9 +114,11 @@ export function Header() {
           <a
             key={item.label}
             style={{ transitionDelay: isMenuOpen ? `${index * 35}ms` : '0ms' }}
-            href={item.href}
+            href={withBase(item.href)}
             aria-current={
-              item.href === window.location.pathname ? 'page' : undefined
+              withBase(item.href) === window.location.pathname
+                ? 'page'
+                : undefined
             }
             onClick={() => setIsMenuOpen(false)}
           >
@@ -167,7 +172,7 @@ export function Footer() {
       <div className="footer-bottom page-width">
         <nav aria-label="フッターナビゲーション" className="footer-nav">
           {navigation.map((item) => (
-            <a href={item.href} key={item.label}>
+            <a href={withBase(item.href)} key={item.label}>
               {item.label}
               {item.label === 'オンラインショップ' && (
                 <small className="nav-status">準備中</small>
@@ -177,8 +182,8 @@ export function Footer() {
         </nav>
         <div className="footer-legal">
           <div>
-            <a href={'/privacy/'}>プライバシーポリシー</a>
-            <a href={'/sitemap/'}>サイトマップ</a>
+            <a href={withBase('/privacy/')}>プライバシーポリシー</a>
+            <a href={withBase('/sitemap/')}>サイトマップ</a>
           </div>
           <small>© 株式会社黒岩農場</small>
         </div>

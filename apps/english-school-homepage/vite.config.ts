@@ -3,7 +3,8 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/codex-app/english-school-homepage/' : '/',
   plugins: [react(), tailwindcss()],
   build: {
     rolldownOptions: {
@@ -20,4 +21,4 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     clearMocks: true,
   },
-});
+}));

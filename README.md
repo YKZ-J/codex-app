@@ -77,7 +77,18 @@ TypeScriptはアプリ・設定ファイルともstrictモードです。明示�
 
 実行環境からnpmレジストリの名前解決ができなかったため、ローカルキャッシュの安定版を利用してインストールしました。依存バージョンは各`package.json`で固定し、推移的依存は`pnpm-lock.yaml`に記録しています。ネットワークを利用できる環境では上記の通常のインストール手順を使用してください。
 
-公開先やCIの設定は含めていません。
+## GitHub Pagesへの公開
+
+- 黒岩農場: https://ykz-j.github.io/codex-app/
+- 英会話教室: https://ykz-j.github.io/codex-app/english-school-homepage/
+
+1. GitHubのリポジトリ Settings → Pages → Build and deployment → Sourceで **GitHub Actions** を選択します。
+2. この設定変更をコミットし、`main`へpushします。
+3. Actionsの「Deploy apps to GitHub Pages」が成功したら、上記URLを確認します。以後は`main`へのpushで自動更新します。Actionsの「Run workflow」から手動実行もできます。
+
+`.github/workflows/deploy.yml`はNode.js 24・packageManager指定のpnpmを使用し、`pnpm install --frozen-lockfile`、lint、test、buildを実行します。英会話サイトのdistを`apps/web/dist/english-school-homepage/`へコピーし、`apps/web/dist`全体をPagesにデプロイします。
+
+Viteのbaseはproductionモードだけ公開先のパスを設定し、ローカル開発では`/`を維持します。両アプリの内部リンクとページ判定はbaseを考慮します。React Routerは使用していません。黒岩農場の既存の静的HTML生成と、英会話の複数HTMLエントリーにより、下層ページへの直接アクセス・再読み込みに対応しています。新しいパスを追加する場合も対応するHTMLを生成してください。GitHub Pagesには任意のURLをindex.htmlに転送するサーバー側の設定はありません。
 
 ## この実行環境で未完了の確認
 

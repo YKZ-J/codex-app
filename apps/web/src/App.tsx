@@ -1,3 +1,4 @@
+import { withoutBase } from './paths';
 import { useEffect } from 'react';
 import { Header, Footer } from './Layout';
 import HomePage from './HomePage';
@@ -44,7 +45,10 @@ export default function App() {
     };
   }, []);
 
-  const path = window.location.pathname.replace(/\/index\.html$/, '/');
+  const path = withoutBase(window.location.pathname).replace(
+    /\/index\.html$/,
+    '/',
+  );
   return (
     <>
       <a href="#main" className="skip-link">

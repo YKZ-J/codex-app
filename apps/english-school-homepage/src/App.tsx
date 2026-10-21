@@ -1,3 +1,5 @@
+import { withoutBase } from './paths';
+import { withBase } from './paths';
 import { useRef, useState } from 'react';
 import { images, navigation } from './content';
 import HomePage from './HomePage';
@@ -36,7 +38,7 @@ function SchoolNavigation({ currentPath }: { currentPath: string }) {
         {navigation.map((item) => (
           <a
             key={item.label}
-            href={item.href}
+            href={withBase(item.href)}
             aria-current={
               item.href.replace(/\/+$/, '') === currentPath ? 'page' : undefined
             }
@@ -52,7 +54,7 @@ function SchoolNavigation({ currentPath }: { currentPath: string }) {
 
 export default function App() {
   const currentPath = (
-    typeof window === 'undefined' ? '/' : window.location.pathname
+    typeof window === 'undefined' ? '/' : withoutBase(window.location.pathname)
   )
     .replace(/\/index\.html$/, '/')
     .replace(/\/+$/, '');
@@ -78,7 +80,7 @@ export default function App() {
               height="738"
             />
             <h1>
-              <a href="/">Ohana英会話</a>
+              <a href={withBase('/')}>Ohana英会話</a>
             </h1>
           </div>
           <SchoolNavigation key={currentPath} currentPath={currentPath} />

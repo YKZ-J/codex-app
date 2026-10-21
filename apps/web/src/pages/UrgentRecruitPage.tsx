@@ -1,3 +1,4 @@
+import { withBase } from '../paths';
 export default function UrgentRecruitPage() {
   return (
     <div className={'source-post_content'}>
@@ -52,7 +53,7 @@ export default function UrgentRecruitPage() {
               </tr>
             </tbody>
           </table>
-          <a href={'/staff-noodle/'}>{'詳細はこちら'}</a>
+          <a href={withBase('/staff-noodle/')}>{'詳細はこちら'}</a>
         </div>
         <br />
         <div>
@@ -100,7 +101,7 @@ export default function UrgentRecruitPage() {
               </tr>
             </tbody>
           </table>
-          <a href={'/staff-bento/'}>{'詳細はこちら'}</a>
+          <a href={withBase('/staff-bento/')}>{'詳細はこちら'}</a>
         </div>
         <p>
           <br />

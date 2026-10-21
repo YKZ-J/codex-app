@@ -1,3 +1,4 @@
+import { withBase } from '../paths';
 export default function OfficialHomepageLaunchedPage() {
   return (
     <div className={'source-post_content'}>
@@ -42,22 +43,22 @@ export default function OfficialHomepageLaunchedPage() {
           <p className={'source-ltitle'}>{'CHECK OUR SITE'}</p>
           <ul>
             <li>
-              <a href={'/company/'}>{'会社概要'}</a>
+              <a href={withBase('/company/')}>{'会社概要'}</a>
             </li>
             <li>
-              <a href={'/business/'}>{'事業紹介'}</a>
+              <a href={withBase('/business/')}>{'事業紹介'}</a>
             </li>
             <li>
-              <a href={'/recruit/'}>{'採用情報'}</a>
+              <a href={withBase('/recruit/')}>{'採用情報'}</a>
             </li>
             <li>
-              <a href={'/online-shop/'}>{'オンラインショップ'}</a>
+              <a href={withBase('/online-shop/')}>{'オンラインショップ'}</a>
             </li>
             <li>
-              <a href={'/news/'}>{'お知らせ'}</a>
+              <a href={withBase('/news/')}>{'お知らせ'}</a>
             </li>
             <li>
-              <a href={'/contact/'}>{'お問い合わせ'}</a>
+              <a href={withBase('/contact/')}>{'お問い合わせ'}</a>
             </li>
           </ul>
         </div>

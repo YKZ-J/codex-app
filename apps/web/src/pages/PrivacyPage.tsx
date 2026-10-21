@@ -1,3 +1,4 @@
+import { withBase } from '../paths';
 export default function PrivacyPage() {
   return (
     <div className={'source-post_content'}>
@@ -72,7 +73,7 @@ export default function PrivacyPage() {
           <h2 className={'source-ph'}>{'10. お問い合わせ窓口'}</h2>
           <p>
             {'本プライバシーポリシーに関するお問い合わせは、'}
-            <a href={'/contact/'}>{'お問い合わせフォーム'}</a>
+            <a href={withBase('/contact/')}>{'お問い合わせフォーム'}</a>
             {'よりご連絡ください。'}
           </p>
         </div>

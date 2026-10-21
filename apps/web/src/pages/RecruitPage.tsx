@@ -1,3 +1,4 @@
+import { withBase } from '../paths';
 export default function RecruitPage() {
   return (
     <div className={'source-post_content'}>
@@ -15,7 +16,10 @@ export default function RecruitPage() {
               }
             </p>
             <div className={'source-rc-field-grid'}>
-              <a className={'source-rc-field-card'} href={'/staff-farm/'}>
+              <a
+                className={'source-rc-field-card'}
+                href={withBase('/staff-farm/')}
+              >
                 <div className={'source-rc-field-photo'}>
                   <img
                     alt={'農場スタッフ'}
@@ -34,7 +38,10 @@ export default function RecruitPage() {
                   <span className={'source-rc-field-more'}>{'詳しく見る'}</span>
                 </div>
               </a>
-              <a className={'source-rc-field-card'} href={'/staff-noodle/'}>
+              <a
+                className={'source-rc-field-card'}
+                href={withBase('/staff-noodle/')}
+              >
                 <div className={'source-rc-field-photo'}>
                   <img
                     alt={'製麺スタッフ'}
@@ -53,7 +60,10 @@ export default function RecruitPage() {
                   <span className={'source-rc-field-more'}>{'詳しく見る'}</span>
                 </div>
               </a>
-              <a className={'source-rc-field-card'} href={'/staff-bento/'}>
+              <a
+                className={'source-rc-field-card'}
+                href={withBase('/staff-bento/')}
+              >
                 <div className={'source-rc-field-photo'}>
                   <img
                     alt={'お弁当調理スタッフ'}
@@ -74,7 +84,10 @@ export default function RecruitPage() {
                   <span className={'source-rc-field-more'}>{'詳しく見る'}</span>
                 </div>
               </a>
-              <a className={'source-rc-field-card'} href={'/staff-restaurant/'}>
+              <a
+                className={'source-rc-field-card'}
+                href={withBase('/staff-restaurant/')}
+              >
                 <div className={'source-rc-field-photo'}>
                   <img
                     alt={'飲食店スタッフ'}
@@ -143,7 +156,7 @@ export default function RecruitPage() {
               <div className={'source-rc-cta-group'}>
                 <a
                   className={'source-rc-cta-btn source-rc-cta-btn--outline'}
-                  href={'/staff-farm/'}
+                  href={withBase('/staff-farm/')}
                 >
                   {'詳細はこちら'}
                 </a>
@@ -204,7 +217,7 @@ export default function RecruitPage() {
               <div className={'source-rc-cta-group'}>
                 <a
                   className={'source-rc-cta-btn source-rc-cta-btn--outline'}
-                  href={'/staff-noodle/'}
+                  href={withBase('/staff-noodle/')}
                 >
                   {'詳細はこちら'}
                 </a>
@@ -280,7 +293,7 @@ export default function RecruitPage() {
               <div className={'source-rc-cta-group'}>
                 <a
                   className={'source-rc-cta-btn source-rc-cta-btn--outline'}
-                  href={'/staff-bento/'}
+                  href={withBase('/staff-bento/')}
                 >
                   {'詳細はこちら'}
                 </a>
@@ -350,7 +363,7 @@ export default function RecruitPage() {
               <div className={'source-rc-cta-group'}>
                 <a
                   className={'source-rc-cta-btn source-rc-cta-btn--outline'}
-                  href={'/staff-restaurant/'}
+                  href={withBase('/staff-restaurant/')}
                 >
                   {'詳細はこちら'}
                 </a>

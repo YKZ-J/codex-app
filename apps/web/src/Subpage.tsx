@@ -1,3 +1,4 @@
+import { withBase } from './paths';
 import metadata from './pageMetadata.json';
 import { pageComponents } from './pages';
 import { news } from './content';
@@ -14,7 +15,7 @@ export function Subpage({ path }: { path: string }) {
     return (
       <main id="main" className="page-width not-found">
         <h1>ページが見つかりません</h1>
-        <a className="text-link" href="/">
+        <a className="text-link" href={withBase('/')}>
           ホームへ戻る →
         </a>
       </main>
@@ -41,7 +42,7 @@ export function Subpage({ path }: { path: string }) {
         </div>
       </div>
       <nav className="page-width breadcrumbs" aria-label="パンくずリスト">
-        <a href="/">ホーム</a>
+        <a href={withBase('/')}>ホーム</a>
         <span aria-hidden="true">/</span>
         <span aria-current="page">{page.title}</span>
       </nav>
@@ -84,7 +85,11 @@ export function Subpage({ path }: { path: string }) {
       {normalizedPath === '/news/' && (
         <div className="page-width subpage-news-list">
           {news.map((item) => (
-            <a className="news-item" href={item.href} key={item.dateTime}>
+            <a
+              className="news-item"
+              href={withBase(item.href)}
+              key={item.dateTime}
+            >
               <time dateTime={item.dateTime}>{item.date}</time>
               <span className="news-tag">お知らせ</span>
               <h2>{item.title}</h2>
@@ -95,7 +100,7 @@ export function Subpage({ path }: { path: string }) {
       )}
       {news.some((item) => item.href === normalizedPath) && (
         <div className="page-width article-back">
-          <a className="text-link" href="/news/">
+          <a className="text-link" href={withBase('/news/')}>
             ← お知らせ一覧へ戻る
           </a>
         </div>
@@ -103,7 +108,7 @@ export function Subpage({ path }: { path: string }) {
       {normalizedPath === '/business/' && (
         <div className="subpage-contact page-width">
           <h2>お問い合わせ</h2>
-          <a className="button" href="/contact/">
+          <a className="button" href={withBase('/contact/')}>
             お問い合わせ →
           </a>
         </div>

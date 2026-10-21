@@ -1,3 +1,4 @@
+import { withBase } from './paths';
 import { HeroMedia } from './HeroMedia';
 import { assetUrl, businesses, news } from './content';
 import { Arrow } from './Layout';
@@ -27,7 +28,7 @@ export default function HomePage() {
               <a className="button button-light" href="#business">
                 事業を知る <Arrow />
               </a>
-              <a className="button button-outline" href={'/contact/'}>
+              <a className="button button-outline" href={withBase('/contact/')}>
                 お問い合わせ <Arrow />
               </a>
             </div>
@@ -55,7 +56,7 @@ export default function HomePage() {
                 <br />
                 北海道の豊かな大地から、そばの新しい可能性を。生産から製粉・製麺、そして食卓まで、一貫したそばづくりに取り組んでいます。
               </p>
-              <a className="text-link" href={'/company/'}>
+              <a className="text-link" href={withBase('/company/')}>
                 私たちについて
                 <Arrow />
               </a>
@@ -123,7 +124,7 @@ export default function HomePage() {
                   <p className="business-description">{business.description}</p>
                   <a
                     className="text-link"
-                    href={'/business/'}
+                    href={withBase('/business/')}
                     aria-label={`${business.title}について詳しく見る`}
                   >
                     詳しく見る <Arrow />
@@ -155,7 +156,7 @@ export default function HomePage() {
               </h2>
               <h3>ドローン農薬防除</h3>
               <p>{businesses[1].description}</p>
-              <a className="text-link" href={'/business/'}>
+              <a className="text-link" href={withBase('/business/')}>
                 農業技術・サービスを見る <Arrow />
               </a>
             </div>
@@ -170,7 +171,7 @@ export default function HomePage() {
                 <span className="status">準備中</span>
                 <h3>{business.title}事業</h3>
                 <p>{business.description}</p>
-                <a className="text-link" href={'/business/'}>
+                <a className="text-link" href={withBase('/business/')}>
                   {business.title}事業について <Arrow />
                 </a>
               </article>
@@ -212,10 +213,10 @@ export default function HomePage() {
                 <br />
                 商品についてはお問い合わせください。
               </p>
-              <a className="text-link" href={'/contact/'}>
+              <a className="text-link" href={withBase('/contact/')}>
                 商品について問い合わせる <Arrow />
               </a>
-              <a className="shop-status-link" href={'/online-shop/'}>
+              <a className="shop-status-link" href={withBase('/online-shop/')}>
                 オンラインショップ（準備中） <Arrow />
               </a>
             </div>
@@ -238,7 +239,7 @@ export default function HomePage() {
                 <br />
                 黒岩農場の仕事と、働く環境をご紹介します。
               </p>
-              <a className="button" href={'/recruit/'}>
+              <a className="button" href={withBase('/recruit/')}>
                 採用情報を見る <Arrow />
               </a>
             </div>
@@ -261,14 +262,18 @@ export default function HomePage() {
               <p className="eyebrow">NEWS</p>
               <h2 id="news-title">お知らせ</h2>
             </div>
-            <a className="text-link" href={'/news/'}>
+            <a className="text-link" href={withBase('/news/')}>
               すべてのお知らせ
               <Arrow />
             </a>
           </div>
           <div className="news-list">
             {news.map((item) => (
-              <a className="news-item" href={item.href} key={item.dateTime}>
+              <a
+                className="news-item"
+                href={withBase(item.href)}
+                key={item.dateTime}
+              >
                 <time dateTime={item.dateTime}>{item.date}</time>
                 <span className="news-tag">お知らせ</span>
                 <h3>{item.title}</h3>
@@ -285,7 +290,7 @@ export default function HomePage() {
               <h2>黒岩農場へのお問い合わせ</h2>
               <p>事業・商品・採用について、お気軽にご相談ください。</p>
             </div>
-            <a className="button button-light" href={'/contact/'}>
+            <a className="button button-light" href={withBase('/contact/')}>
               お問い合わせ <Arrow />
             </a>
           </div>

@@ -1,3 +1,4 @@
+import { withBase } from './paths';
 export default function TeachersPage() {
   return (
     <>
@@ -99,7 +100,7 @@ export default function TeachersPage() {
           </div>
         </article>
         <div className="page-next-step">
-          <a href="/p/3/">
+          <a href={withBase('/p/3/')}>
             レッスン日程＆料金を見る<span aria-hidden="true">→</span>
           </a>
         </div>

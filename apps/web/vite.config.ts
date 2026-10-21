@@ -5,7 +5,8 @@ import metadata from './src/pageMetadata.json';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/codex-app/' : '/',
   plugins: [
     react(),
     tailwindcss(),
@@ -53,4 +54,4 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     clearMocks: true,
   },
-});
+}));
